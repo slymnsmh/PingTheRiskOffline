@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="main_pane" fx:id="main_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainSceneController">
+    <children>
+        <fx:include fx:id="commonUI" source="CommonUI.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <VBox fx:id="menu_vbox" layoutX="1049.0" layoutY="381.0" prefHeight="558.0" prefWidth="350.0" spacing="10.0" AnchorPane.bottomAnchor="140.5999999999999" AnchorPane.leftAnchor="1049.0" AnchorPane.rightAnchor="520.5999999999999" AnchorPane.topAnchor="381.0">
+            <children>
+                <Button fx:id="newGame_btn" minHeight="40.0" minWidth="250.0" mnemonicParsing="false" onAction="#newGameClicked" opacity="0.8" prefHeight="120.0" prefWidth="400.0" style="-fx-background-color: white; -fx-alignment: center-left;" text="NEW GAME">
+                    <font>
+                        <Font size="27.0" />
+                    </font>
+                </Button>
+                <Button fx:id="settings_btn" minHeight="40.0" minWidth="250.0" mnemonicParsing="false" onAction="#settingsClicked" opacity="0.8" prefHeight="120.0" prefWidth="400.0" style="-fx-background-color: white; -fx-alignment: center-left;" text="SETTINGS">
+                    <font>
+                        <Font size="27.0" />
+                    </font>
+                </Button>
+                <Button fx:id="credits_btn" minHeight="40.0" minWidth="250.0" mnemonicParsing="false" onAction="#creditsClicked" opacity="0.8" prefHeight="120.0" prefWidth="400.0" style="-fx-background-color: white; -fx-alignment: center-left;" text="CREDITS">
+                    <font>
+                        <Font size="27.0" />
+                    </font>
+                </Button>
+                <Button fx:id="howToPlay_btn" minHeight="40.0" minWidth="250.0" mnemonicParsing="false" onAction="#howToPlayClicked" opacity="0.8" prefHeight="120.0" prefWidth="400.0" style="-fx-background-color: white; -fx-alignment: center-left;" text="HOW TO PLAY">
+                    <font>
+                        <Font size="27.0" />
+                    </font>
+                </Button>
+                <Button fx:id="exit_btn" minHeight="40.0" minWidth="250.0" mnemonicParsing="false" onAction="#exitClicked" opacity="0.8" prefHeight="120.0" prefWidth="400.0" style="-fx-background-color: white; -fx-alignment: center-left;" text="EXIT">
+                    <font>
+                        <Font size="27.0" />
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+      <VBox fx:id="nicknames_vbox" layoutX="520.0" layoutY="444.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+         <children>
+                <TextField fx:id="nickname1_tf" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.8" prefHeight="100.0" prefWidth="400.0" promptText="Player 1..." style="-fx-background-color: white;">
+                    <font>
+                        <Font size="27.0" />
+                    </font>
+                </TextField>
+            <TextField fx:id="nickname2_tf" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.8" prefHeight="100.0" prefWidth="400.0" promptText="Player 2..." style="-fx-background-color: white;">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="nickname3_tf" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.8" prefHeight="100.0" prefWidth="400.0" promptText="Player 3..." style="-fx-background-color: white;">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="nickname4_tf" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.8" prefHeight="100.0" prefWidth="400.0" promptText="Player 4..." style="-fx-background-color: white;">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </TextField>
+         </children>
+      </VBox>
+    </children>
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
+</AnchorPane>
