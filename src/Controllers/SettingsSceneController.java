@@ -58,7 +58,7 @@ public class SettingsSceneController implements Initializable {
         String newSound = String.valueOf(this.sound_slider.getValue());
 
         try {
-            AudioPlayer.player.stop(MainSceneController.audios);
+            //AudioPlayer.player.stop(MainSceneController.audios);
             System.out.println("sound3" + newSound);
             fileContents = fileContents.replaceAll(oldSound, newSound);
             fileContents = fileContents.replaceAll(oldFrameSize, newFrameSize);

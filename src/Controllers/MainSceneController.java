@@ -1,6 +1,7 @@
 package Controllers;
 
 import Scene.CreditsScene;
+import Scene.GameScene;
 import Scene.HowToPlayScene;
 import Scene.SettingScene;
 import StorageRelatedClasses.Player;
@@ -8,8 +9,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -19,7 +23,9 @@ public class MainSceneController implements Initializable
     @FXML public VBox nicknames_vbox;
     @FXML public TextField nickname1_tf, nickname2_tf, nickname3_tf, nickname4_tf;
     @FXML public Button newGame_btn, settings_btn, credits_btn, howToPlay_btn, exit_btn;
-    ArrayList<Player> players = new ArrayList<>();
+    @FXML public Label info_lbl;
+    ArrayList<Player> players;
+    String[] colors = {"blue", "red", "green", "orange"};
     //static AudioStream audios;
 
     @Override
@@ -31,7 +37,45 @@ public class MainSceneController implements Initializable
     @FXML
     private void newGameClicked (ActionEvent e) throws Exception
     {
-        
+        players = new ArrayList<>();
+        if (!nickname1_tf.getText().equals(""))
+            players.add(new Player(nickname1_tf.getText()));
+        if (!nickname2_tf.getText().equals(""))
+            players.add(new Player(nickname2_tf.getText()));
+        if (!nickname3_tf.getText().equals(""))
+            players.add(new Player(nickname3_tf.getText()));
+        if (!nickname4_tf.getText().equals(""))
+            players.add(new Player(nickname4_tf.getText()));
+
+        for (Player p : players)
+        {
+            for (Player p2 : players) {
+                if (p!=p2 && p.getNickname().equals(p2.getNickname())) {
+                    info_lbl.setText("Nicknames must be unique for each player!");
+                    return;
+                }
+            }
+        }
+
+        if (players.size() < 2)
+        {
+            info_lbl.setText("Minimum 2 players!");
+        }
+        else
+        {
+            assignColorsToPlayers();
+            GameScene gameScene = new GameScene(players);
+        }
+    }
+
+    public void assignColorsToPlayers()
+    {
+        int i = 0;
+        for (Player p : players)
+        {
+            p.setColor(colors[i]);
+            i++;
+        }
     }
 
     @FXML

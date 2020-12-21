@@ -19,7 +19,6 @@ public class Main extends Application
         //stage.setMaximized(true);
         //stage.setFullScreen(true);
         //stage.initStyle(StageStyle.UNDECORATED);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/StageObjects/pingTheRisk_logo.png")));
         stage.show();
     }
 
