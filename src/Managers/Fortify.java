@@ -7,9 +7,11 @@ public class Fortify{
     int hackerNum;
 
 
-    Fortify(Country baseCountry, Country targetCountry, int hackerNum){
+    public Fortify(Country baseCountry, Country targetCountry, int hackerNum){
         this.baseCountry = baseCountry;
         this.targetCountry = targetCountry;
+        this.hackerNum = hackerNum;
+
         fortifyHackers();
     }
 
