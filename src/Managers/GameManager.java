@@ -51,6 +51,7 @@ public class GameManager implements Initializable
     @FXML public SplitMenuButton hackerNum_menu;
     @FXML public Label infoGame_lbl;
     @FXML public Button nextPhase_btn;
+    @FXML public ImageView chosenCard1, chosenCard2, chosenCard3;
     public int turnOwner = 1;
     ArrayList<Player> players;
     int playerNumber;
@@ -248,7 +249,6 @@ public class GameManager implements Initializable
         if (baseCountry != null) {
             if(players.get(turnOwner - 1).getNumOfBonusHackers() != 0)
             {
-                System.out.println("asdd " + hackerNum_menu.getText());
                 Hire hire = new Hire(players.get(turnOwner - 1), baseCountry, Integer.parseInt(hackerNum_menu.getText()));
             }
             setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false);
@@ -287,10 +287,6 @@ public class GameManager implements Initializable
 
     public void startFortifyPart(){
         Fortify fortify = new Fortify(baseCountry, targetCountry, Integer.parseInt(hackerNum_menu.getText()));
-    }
-
-    public void giveBonusHackers(){
-
     }
 
     public void endTurn(){
@@ -485,10 +481,7 @@ public class GameManager implements Initializable
                     }
                 }
             }
-            if (baseCountry.getHackerNumber() >= 3)
-                setHackerNumMenu(3, false);
-            else
-                setHackerNumMenu(baseCountry.getHackerNumber(), false);
+            setHackerNumMenu(Math.min(baseCountry.getHackerNumber(), 3), false);
         }
         else{
             for (Country c : players.get(turnOwner - 1).getCountries()) {
@@ -529,8 +522,8 @@ public class GameManager implements Initializable
 
     private void updateScene(Country baseCountry, Country targetCountry) {
         if (baseCountry != null) {
+            int cId = baseCountry.getId();
             if (turnType == 1) {
-                int cId = baseCountry.getId();
                 for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size() - TOTAL_NUM_OF_COUNTRIES; i++) {
                     Label label = (Label) map_pane.getChildren().get(i);
                     if (label.getId().substring(3, label.getId().indexOf("_")).equals(String.valueOf(cId))) {
@@ -539,7 +532,6 @@ public class GameManager implements Initializable
                     }
                 }
             } else {
-                int cId = baseCountry.getId();
                 int cId2 = targetCountry.getId();
                 for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size() - TOTAL_NUM_OF_COUNTRIES; i++) {
                     Label label = (Label) map_pane.getChildren().get(i);
@@ -626,6 +618,56 @@ public class GameManager implements Initializable
             cards_pane.setVisible(false);
     }
 
+    private void updateCardsScene() {
+        Player currentPlayer = players.get(turnOwner - 1);
+        for (int i = 0; i < currentPlayer.getCards().size(); i++)
+        {
+            Pane pane = (Pane) cards_hbox.getChildren().get(i);
+            ImageView imageView = (ImageView) pane.getChildren().get(0);
+            int cardType = currentPlayer.getCards().get(i).getType();
+            if (cardType == 1)
+                imageView.setImage(new Image("/Pictures/lCard.jpg"));
+            else if (cardType == 2)
+                imageView.setImage(new Image("/Pictures/wCard.jpg"));
+            else if (cardType == 3)
+                imageView.setImage(new Image("/Pictures/gCard.jpg"));
+            else if (cardType == 4)
+                imageView.setImage(new Image("/Pictures/bCard.jpg"));
+        }
+    }
+
+    @FXML
+    public void selectedClicked(MouseEvent e)
+    {
+        ImageView imageView = (ImageView) e.getSource();
+        if (imageView.getImage() != null)
+            imageView.setImage(null);
+    }
+
+    @FXML
+    public void cardSelected(MouseEvent e)
+    {
+        ImageView clicked = (ImageView) e.getSource();
+        if (chosenCard1.getImage() == null)
+        {
+            chosenCard1.setImage(clicked.getImage());
+        }
+        else if (chosenCard2.getImage() == null)
+        {
+            chosenCard2.setImage(clicked.getImage());
+        }
+        else if (chosenCard3.getImage() == null)
+        {
+            chosenCard3.setImage(clicked.getImage());
+        }
+    }
+
+    @FXML
+    public void combineCardsClicked()
+    {
+
+    }
+
     public void endGame()
     {
         infoGame_lbl.setText("WINNER IS: " + players.get(0) + " !!!!");
@@ -654,15 +696,4 @@ public class GameManager implements Initializable
         return false;
     }*/
 
-    //Oyunculara renk ata
-    //Oyunculara hacker sayısı ata
-    //Ülkeleri oyunculara ata
-    //Ülkelere renk ata
-    //Ülkere hacker sayısı ata
-    //Eğer tüm ülkeler tek bir kişinin değilse
-    //Turn sahibini belirle
-    //Turn başlat
-    //Eğer tüm ülkeler tek bir kişininse
-    //Oyun bilgilerini (kazanan, puanlar vs) güncelle (database)
-    //Oyunu bitir ve oyuncuları lobby sayfasına döndür
 }

@@ -11,14 +11,9 @@
 <AnchorPane id="main_pane" fx:id="main_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainSceneController">
     <children>
         <fx:include fx:id="commonUI" source="CommonUI.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-        <VBox fx:id="menu_vbox" layoutX="1049.0" layoutY="381.0" prefHeight="558.0" prefWidth="350.0" spacing="10.0" AnchorPane.bottomAnchor="140.5999999999999" AnchorPane.leftAnchor="1049.0" AnchorPane.rightAnchor="520.5999999999999" AnchorPane.topAnchor="381.0">
+        <VBox fx:id="menu_vbox" layoutX="1074.0" layoutY="418.0" prefHeight="558.0" prefWidth="350.0" spacing="10.0" AnchorPane.bottomAnchor="103.59999999999991" AnchorPane.leftAnchor="1074.0" AnchorPane.rightAnchor="495.5999999999999" AnchorPane.topAnchor="418.0">
             <children>
                 <Button fx:id="newGame_btn" minHeight="40.0" minWidth="250.0" mnemonicParsing="false" onAction="#newGameClicked" opacity="0.8" prefHeight="120.0" prefWidth="400.0" style="-fx-background-color: white; -fx-alignment: center-left;" text="NEW GAME">
-                    <font>
-                        <Font size="27.0" />
-                    </font>
-                </Button>
-                <Button fx:id="settings_btn" minHeight="40.0" minWidth="250.0" mnemonicParsing="false" onAction="#settingsClicked" opacity="0.8" prefHeight="120.0" prefWidth="400.0" style="-fx-background-color: white; -fx-alignment: center-left;" text="SETTINGS">
                     <font>
                         <Font size="27.0" />
                     </font>
