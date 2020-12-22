@@ -200,7 +200,7 @@
                   <Image url="@../MapComponents/35/35o.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="img36" fitHeight="150.0" fitWidth="135.0" layoutX="610.0" layoutY="321.0" onMouseClicked="#regionClicked" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="img36" fitHeight="150.0" fitWidth="135.0" layoutX="644.0" layoutY="261.0" onMouseClicked="#regionClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../MapComponents/36/36g.png" />
                </image>
@@ -380,7 +380,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="num36_lbl" layoutX="663.0" layoutY="368.0" text="36" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="num36_lbl" layoutX="698.0" layoutY="313.0" text="36" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -430,12 +430,12 @@
             </Button>
          </children>
       </HBox>
-      <Label fx:id="hacker_lbl" layoutX="759.0" layoutY="441.0" text="HACKER" textFill="WHITE">
+      <Label fx:id="hacker_lbl" layoutX="718.0" layoutY="437.0" text="HACKER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
       </Label>
-      <SplitMenuButton fx:id="hackerNum_menu" layoutX="850.0" layoutY="439.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="90.0" />
+      <SplitMenuButton fx:id="hackerNum_menu" layoutX="812.0" layoutY="433.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="130.0" />
       <Button fx:id="howToPlay_btn" alignment="CENTER" contentDisplay="CENTER" layoutX="843.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#howToPlayClicked" prefHeight="49.0" prefWidth="49.0" style="-fx-background-radius: 50; -fx-border-radius: 50;" text="How to play" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="10.0" />
@@ -446,7 +446,7 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <ImageView fx:id="cards_img" fitHeight="70.0" fitWidth="50.0" layoutX="890.0" layoutY="348.0" onMouseClicked="#cardsClicked" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="cards_img" fitHeight="70.0" fitWidth="50.0" layoutX="893.0" layoutY="348.0" onMouseClicked="#cardsClicked" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Pictures/cardsIcon.png" />
          </image>
@@ -513,5 +513,6 @@
             <Font size="15.0" />
          </font>
       </Label>
+      <Button fx:id="nextPhase_btn" layoutX="414.0" layoutY="495.0" mnemonicParsing="false" onAction="#nextPhaseClicked" text="Next phase" />
    </children>
 </AnchorPane>

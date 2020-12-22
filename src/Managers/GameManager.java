@@ -56,7 +56,7 @@ public class GameManager implements Initializable
     @FXML public ImageView cards_img;
     @FXML public SplitMenuButton hackerNum_menu;
     @FXML public Label infoGame_lbl;
-
+    @FXML public Button nextPhase_btn;
     public int turnOwner = 1;
     ArrayList<Player> players;
     int playerNumber;
@@ -84,6 +84,14 @@ public class GameManager implements Initializable
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void nextPhaseClicked()
+    {
+        turnType++;
+        disableNodes();
+        startTurn(turnType);
     }
 
     public void getCountriesFromFile() throws IOException {
@@ -127,10 +135,12 @@ public class GameManager implements Initializable
         }
         setCountryColors();
         setCountryHackerNumLabels();
+        assignBonusHackers();
         setHackerNumMenu();
     }
 
-    public void startTurn(int turnType) {
+    public void assignBonusHackers()
+    {
         if (first == true){
             for (Player p : players)
             {
@@ -138,18 +148,23 @@ public class GameManager implements Initializable
             }
             first = false;
         }
+    }
+
+    public void startTurn(int turnType) {
+        assignBonusHackers();
         decidePart(turnType);
     }
 
     public void setHackerNumMenu()
     {
-        MenuItem item1 = new MenuItem("1");
-        MenuItem item2 = new MenuItem("2");
-        MenuItem item3 = new MenuItem("3");
-        item1.setOnAction(event);
-        item2.setOnAction(event);
-        item3.setOnAction(event);
-        hackerNum_menu.getItems().addAll(item1, item2, item3);
+        for (int i = 0; i < players.get(turnOwner - 1).getNumOfBonusHackers(); i++)
+        {
+            MenuItem item = new MenuItem(i+1 + "");
+            item.setOnAction(event);
+            hackerNum_menu.getItems().add(item);
+            if (i == 0)
+                hackerNum_menu.setText(item.getText());
+        }
     }
 
     EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
@@ -226,7 +241,8 @@ public class GameManager implements Initializable
     }
 
     public void startHack(){
-        //Hack hack = new Hack(turnOwner);
+        Player attacker = players.get(turnOwner - 1);
+        Hack hack = new Hack(attacker, targetCountry.getOwner());
     }
 
 
@@ -380,8 +396,14 @@ public class GameManager implements Initializable
         }
         else if (turnType == 2)
         {
-            setBaseCountry(e);
-            setTargetCountry(e);
+            if (setBaseCountry(e) == null)
+                infoGame_lbl.setText("You must select one of your own countries!");
+            else
+                infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Hack");
+            if (setTargetCountry(e) == null)
+                infoGame_lbl.setText("You must select one of the enemy countries!");
+            else
+                infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Hack");
         }
         else{
             setBaseCountry(e);
@@ -392,9 +414,14 @@ public class GameManager implements Initializable
     @FXML
     public void hireClicked()
     {
-        turnType = 1;
         startTurn(turnType);
         updateScene(baseCountry, null);
+        setHackerNumMenu();
+        if (players.get(turnOwner - 1).getNumOfBonusHackers() == 0)
+        {
+            disableNodes();
+            startTurn(turnType);
+        }
     }
 
     private void updateScene(Country baseCountry, Country targetCountry) {
@@ -408,9 +435,8 @@ public class GameManager implements Initializable
                         break;
                     }
                 }
-                turnType = 2;
             } else if (turnType == 2) {
-
+                System.out.println();
             } else {
 
             }
@@ -444,7 +470,7 @@ public class GameManager implements Initializable
         return baseCountry;
     }
 
-    void setTargetCountry(MouseEvent e) {
+    public Country setTargetCountry(MouseEvent e) {
         ImageView x = (ImageView) e.getSource();
         System.out.println(x.getId());
         int countryIndex = Integer.parseInt(x.getId().substring(3));
@@ -454,6 +480,7 @@ public class GameManager implements Initializable
                     targetCountry = c;
             }
         }
+        return targetCountry;
     }
 
     void setDestinationCountry(MouseEvent e) {
