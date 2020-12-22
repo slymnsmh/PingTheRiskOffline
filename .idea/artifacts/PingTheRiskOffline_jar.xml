@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PingTheRiskOffline:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PingTheRiskOffline_jar</output-path>
+    <root id="archive" name="PingTheRiskOffline.jar">
+      <element id="module-output" name="PingTheRiskOffline" />
+    </root>
+  </artifact>
+</component>
