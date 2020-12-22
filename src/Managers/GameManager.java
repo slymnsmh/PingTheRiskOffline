@@ -162,17 +162,15 @@ public class GameManager implements Initializable
         hackerNum_menu.getItems().clear();
         for (int i = 1; i <= hackerNum; i++)
         {
-            MenuItem item = null;
             if(zero) {
-                i = 0;
+                i = -1;
                 zero = false;
+                continue;
             }
-            else
-                item = new MenuItem(i + "");
+            MenuItem item = new MenuItem(i + "");
             item.setOnAction(event);
             hackerNum_menu.getItems().add(item);
-            if (i == 1)
-                hackerNum_menu.setText(item.getText());
+            hackerNum_menu.setText(hackerNum_menu.getItems().get(0).getText());
         }
     }
 
@@ -229,7 +227,6 @@ public class GameManager implements Initializable
 
     public void decidePart(int turnType){
         if (turnType == 1) {
-            setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false);
             startHirePart();
         }
         else if(turnType == 2) {
@@ -469,13 +466,12 @@ public class GameManager implements Initializable
         if(baseCountry == null){
             infoGame_lbl.setText("You must select one of your own countries!");
         }
-        else if (players.get(turnOwner - 1).getNumOfBonusHackers() == 0){
-            setHackerNumMenu(0, true);
-            infoGame_lbl.setText("No hackers left to hire. Go to hack phase!");
-        }
         else{
             startTurn(turnType);
             updateScene(baseCountry, null);
+            if (players.get(turnOwner - 1).getNumOfBonusHackers() == 0){
+                infoGame_lbl.setText("No hackers left to hire. Go to hack phase!");
+            }
         }
     }
 
