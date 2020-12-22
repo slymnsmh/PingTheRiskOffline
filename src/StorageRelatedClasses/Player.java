@@ -11,7 +11,7 @@ public class Player
     private String color;
     private int numOfHackers;
     private int numOfCountries;
-    private ArrayList<Integer> countries;
+    private ArrayList<Country> countries;
     private int numOfWins;
     private int numOfLosses;
     private int numOfBonusCards;
@@ -91,12 +91,12 @@ public class Player
         this.numOfCountries = numOfRegions;
     }
 
-    public ArrayList<Integer> getCountries()
+    public ArrayList<Country> getCountries()
     {
         return countries;
     }
 
-    public void setCountries( ArrayList<Integer> countries )
+    public void setCountries( ArrayList<Country> countries )
     {
         this.countries = countries;
     }

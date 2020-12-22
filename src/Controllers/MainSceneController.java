@@ -25,7 +25,7 @@ public class MainSceneController implements Initializable
     @FXML public Button newGame_btn, settings_btn, credits_btn, howToPlay_btn, exit_btn;
     @FXML public Label info_lbl;
     ArrayList<Player> players;
-    String[] colors = {"blue", "red", "green", "orange"};
+
     //static AudioStream audios;
 
     @Override
@@ -63,18 +63,7 @@ public class MainSceneController implements Initializable
         }
         else
         {
-            assignColorsToPlayers();
             GameScene gameScene = new GameScene(players);
-        }
-    }
-
-    public void assignColorsToPlayers()
-    {
-        int i = 0;
-        for (Player p : players)
-        {
-            p.setColor(colors[i]);
-            i++;
         }
     }
 
