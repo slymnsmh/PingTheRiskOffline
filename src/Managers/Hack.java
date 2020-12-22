@@ -24,6 +24,7 @@ public class Hack{
         int temp1 = Integer.parseInt(baseCountry.getLocation().substring(0, 1)) - Integer.parseInt(targetCountry.getLocation().substring(0, 1));
         int temp2 = Integer.parseInt(baseCountry.getLocation().substring(2, 3)) - Integer.parseInt(targetCountry.getLocation().substring(2, 3));
         distance = (int) Math.sqrt(Math.pow(temp1, 2) + Math.pow(temp2, 2));
+        System.out.println("Distance: " + distance);
     }
 
     void startAttack(){

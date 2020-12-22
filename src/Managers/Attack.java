@@ -25,25 +25,26 @@ public class Attack extends PingManager {
         numOfAttackerHackers = attackersCountry.getHackerNumber();
         numOfDefenderHackers = defendersCountry.getHackerNumber();
 
-        if(numOfAttackerHackers >= 3 && numOfDefenderHackers>= 2){
+        if(numOfAttackerHackers > 3 && numOfDefenderHackers >= 2){
             roll = new DiceManager(3,2, pingManager.pingLevel);
             roll.compareBiggest(numOfAttackerHackers,numOfDefenderHackers);
         }
-        else if(numOfAttackerHackers >= 3 && numOfDefenderHackers == 1){
+        else if(numOfAttackerHackers > 3 && numOfDefenderHackers == 1){
             roll = new DiceManager(3,1,pingManager.pingLevel);
             roll.compareBiggest(numOfAttackerHackers,numOfDefenderHackers);
         }
-        else if(numOfAttackerHackers < 3 && numOfDefenderHackers>= 2){
+        else if(numOfAttackerHackers <= 3 && numOfDefenderHackers >= 2){
             roll = new DiceManager(numOfAttackerHackers,2,pingManager.pingLevel);
             roll.compareBiggest(numOfAttackerHackers,numOfDefenderHackers);
         }
-        else if(numOfAttackerHackers < 3 && numOfDefenderHackers == 1) {
+        else if(numOfAttackerHackers <= 3 && numOfDefenderHackers == 1) {
             roll = new DiceManager(numOfAttackerHackers, 1, pingManager.pingLevel);
             roll.compareBiggest(numOfAttackerHackers, numOfDefenderHackers);
         }
 
         attackersCountry.setHackerNumber(numOfAttackerHackers - roll.defenderWins);
         defendersCountry.setHackerNumber(numOfDefenderHackers - roll.attackerWins);
+
 
 
     }
