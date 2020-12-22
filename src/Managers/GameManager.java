@@ -103,9 +103,9 @@ public class GameManager implements Initializable
         {
             System.out.println("Line: " + line);
             line = line.substring(1);
-            String countryId = line.substring(0, line.indexOf("|"));  //1
+            String countryId = line.substring(0, line.indexOf("|"));
             line = line.substring(line.indexOf("|") + 1);
-            String countryName = line.substring(0, line.indexOf("|")); //1
+            String countryName = line.substring(0, line.indexOf("|"));
             line = line.substring(line.indexOf("|") + 1);
             String location = line;
             Country country = new Country(Integer.parseInt(countryId), countryName, location);
@@ -329,7 +329,7 @@ public class GameManager implements Initializable
     }
 
     public void setCountryHackerNumLabels() {
-        for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size(); i++) {
+        for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size() - TOTAL_NUM_OF_COUNTRIES; i++) {
             Label label = (Label) map_pane.getChildren().get(i);
             label.setText(allCountries.get(i - TOTAL_NUM_OF_COUNTRIES).getHackerNumber() + "");
         }
@@ -429,8 +429,10 @@ public class GameManager implements Initializable
             System.out.println(x.getId());
             int countryIndex = Integer.parseInt(x.getId().substring(3));
             for(Country c : players.get(turnOwner - 1).getCountries()){
-                if(c.getId() == countryIndex)
+                if(c.getId() == countryIndex) {
+                    map_pane.getChildren().get(c.getId() + (TOTAL_NUM_OF_COUNTRIES * 2)).setVisible(true);
                     baseCountry = c;
+                }
             }
         }
         else if (turnType == 2)
@@ -443,10 +445,13 @@ public class GameManager implements Initializable
                 for (Country c : p.getCountries()){
                     if(c.getId() == countryIndex){
                         if(c.getOwner() == players.get(turnOwner -1)){
+                            map_pane.getChildren().get(c.getId() + (TOTAL_NUM_OF_COUNTRIES * 2)).setVisible(true);
                             baseCountry = c;
                         }
-                        else
+                        else {
+                            map_pane.getChildren().get(c.getId() + (TOTAL_NUM_OF_COUNTRIES * 2)).setVisible(true);
                             targetCountry = c;
+                        }
                     }
                 }
             }
@@ -479,7 +484,7 @@ public class GameManager implements Initializable
         if (baseCountry != null) {
             if (turnType == 1) {
                 int cId = baseCountry.getId();
-                for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size(); i++) {
+                for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size() - TOTAL_NUM_OF_COUNTRIES; i++) {
                     Label label = (Label) map_pane.getChildren().get(i);
                     if (label.getId().substring(3, label.getId().indexOf("_")).equals(String.valueOf(cId))) {
                         label.setText(baseCountry.getHackerNumber() + "");
@@ -489,7 +494,7 @@ public class GameManager implements Initializable
             } else if (turnType == 2) {
                 int cId = baseCountry.getId();
                 int cId2 = targetCountry.getId();
-                for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size(); i++) {
+                for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size() - TOTAL_NUM_OF_COUNTRIES; i++) {
                     Label label = (Label) map_pane.getChildren().get(i);
                     if (label.getId().substring(3, label.getId().indexOf("_")).equals(String.valueOf(cId))) {
                         label.setText(baseCountry.getHackerNumber() + "");
