@@ -72,7 +72,6 @@ public class GameManager implements Initializable
     public static Country targetCountry;
     int turnType;
     public boolean first = true;
-    boolean baseSelected = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -95,7 +94,6 @@ public class GameManager implements Initializable
         disableNodes();
         baseCountry = null;
         targetCountry = null;
-        baseSelected = false;
     }
 
     public void getCountriesFromFile() throws IOException {
@@ -140,12 +138,12 @@ public class GameManager implements Initializable
         setCountryColors();
         setCountryHackerNumLabels();
         assignBonusHackers();
-        setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers());
+        setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false);
     }
 
     public void assignBonusHackers()
     {
-        if (first == true){
+        if (first){
             for (Player p : players)
             {
                 p.setNumOfBonusHackers(3);
@@ -159,14 +157,21 @@ public class GameManager implements Initializable
         decidePart(turnType);
     }
 
-    public void setHackerNumMenu(int hackerNum)
+    public void setHackerNumMenu(int hackerNum, boolean zero)
     {
-        for (int i = 0; i < hackerNum; i++)
+        hackerNum_menu.getItems().clear();
+        for (int i = 1; i <= hackerNum; i++)
         {
-            MenuItem item = new MenuItem(i+1 + "");
+            MenuItem item = null;
+            if(zero) {
+                i = 0;
+                zero = false;
+            }
+            else
+                item = new MenuItem(i + "");
             item.setOnAction(event);
             hackerNum_menu.getItems().add(item);
-            if (i == 0)
+            if (i == 1)
                 hackerNum_menu.setText(item.getText());
         }
     }
@@ -200,18 +205,21 @@ public class GameManager implements Initializable
     {
         if (turnType == 1)
         {
+            infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Hire");
             hire_btn.setDisable(false);
             hack_btn.setDisable(true);
             fortify_btn.setDisable(true);
         }
         else if (turnType == 2)
         {
+            infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Hack");
             hire_btn.setDisable(true);
             hack_btn.setDisable(false);
             fortify_btn.setDisable(true);
             cards_img.setDisable(true);
         }
-        else {
+        else if (turnType == 3){
+            infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Fortify");
             cards_img.setDisable(true);
             hire_btn.setDisable(true);
             hack_btn.setDisable(true);
@@ -221,12 +229,15 @@ public class GameManager implements Initializable
 
     public void decidePart(int turnType){
         if (turnType == 1) {
+            setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false);
             startHirePart();
         }
         else if(turnType == 2) {
+            setHackerNumMenu(0, false);
             startHack();
         }
         else if(turnType == 3){
+            setHackerNumMenu(0, false);
             startFortifyPart();
         }
         else
@@ -237,10 +248,10 @@ public class GameManager implements Initializable
         if (baseCountry != null) {
             if(players.get(turnOwner - 1).getNumOfBonusHackers() != 0)
             {
+                System.out.println("asdd " + hackerNum_menu.getText());
                 Hire hire = new Hire(players.get(turnOwner - 1), baseCountry, Integer.parseInt(hackerNum_menu.getText()));
             }
-            else
-                System.out.println("goHack");
+            setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false);
         }
     }
 
@@ -249,13 +260,15 @@ public class GameManager implements Initializable
         int win = attacker.getNumOfWins();
         Hack hack = new Hack(baseCountry, targetCountry);
         if(win != attacker.getNumOfWins()) {
-            info_lbl.setText("Choose number of hackers to move to gained country!");
-            setHackerNumMenu(baseCountry.getHackerNumber() - 1);
+            updateScene(baseCountry,targetCountry);
+            System.out.println("targetcountryhacker " + targetCountry.getHackerNumber());
+            setCountryColors();
+            infoGame_lbl.setText("Choose number of hackers to move to gained country!");
+            setHackerNumMenu(baseCountry.getHackerNumber() - 1, true);
             hack_btn.setText("MOVE");
         }
         else {
             updateScene(baseCountry, targetCountry);
-            System.out.println("ANAN ENABLE");
             enableMap();
         }
     }
@@ -415,42 +428,54 @@ public class GameManager implements Initializable
     {
         if (turnType == 1)
         {
-            infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Hire");
-            if (setBaseCountry(e) == null)
-                infoGame_lbl.setText("You must select one of your own countries!");
+            ImageView x = (ImageView)e.getSource();
+            System.out.println(x.getId());
+            int countryIndex = Integer.parseInt(x.getId().substring(3));
+            for(Country c : players.get(turnOwner - 1).getCountries()){
+                if(c.getId() == countryIndex)
+                    baseCountry = c;
+            }
         }
         else if (turnType == 2)
         {
-            infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Hack");
-            if (!baseSelected) {
-                if (setBaseCountry(e) == null)
-                    infoGame_lbl.setText("You must select one of your own countries!");
-                else if (baseCountry.getHackerNumber() <= 2)
-                    infoGame_lbl.setText("You must select a country with more hackers!");
+            ImageView x = (ImageView)e.getSource();
+            System.out.println(x.getId());
+            int countryIndex = Integer.parseInt(x.getId().substring(3));
+
+            for (Player p : players) {
+                for (Country c : p.getCountries()){
+                    if(c.getId() == countryIndex){
+                        if(c.getOwner() == players.get(turnOwner -1)){
+                            baseCountry = c;
+                        }
+                        else
+                            targetCountry = c;
+                    }
+                }
             }
-            else {
-                if (setTargetCountry(e) == null)
-                    infoGame_lbl.setText("You must select one of the enemy countries!");
-                else
-                    infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Hack");
-            }
+            if (baseCountry.getHackerNumber() >= 3)
+                setHackerNumMenu(3, false);
+            else
+                setHackerNumMenu(baseCountry.getHackerNumber(), false);
         }
         else{
-            setBaseCountry(e);
-            setDestinationCountry(e);
+
         }
     }
 
     @FXML
     public void hireClicked()
     {
-        startTurn(turnType);
-        updateScene(baseCountry, null);
-        setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers());
-        if (players.get(turnOwner - 1).getNumOfBonusHackers() == 0)
-        {
-            disableNodes();
+        if(baseCountry == null){
+            infoGame_lbl.setText("You must select one of your own countries!");
+        }
+        else if (players.get(turnOwner - 1).getNumOfBonusHackers() == 0){
+            setHackerNumMenu(0, true);
+            infoGame_lbl.setText("No hackers left to hire. Go to hack phase!");
+        }
+        else{
             startTurn(turnType);
+            updateScene(baseCountry, null);
         }
     }
 
@@ -487,14 +512,30 @@ public class GameManager implements Initializable
     public void hackClicked()
     {
         if(hack_btn.getText().equals("HACK")){
-            startTurn(turnType);
-            //disableMap();
+            if(baseCountry == null || targetCountry == null) {
+                infoGame_lbl.setText("Choose countries for hack!");
+            }
+            else if(baseCountry.getHackerNumber() <= 1)
+            {
+                System.out.println("gir aq");
+                infoGame_lbl.setText("Choose a country with more hackers!");
+            }
+            else
+            {
+                disableMap();
+                startTurn(turnType);
+            }
         }
         else if(hack_btn.getText().equals("MOVE")){
+            System.out.println("menu " + hackerNum_menu.getText());
+            System.out.println("basecountryhacekrafterhack" + baseCountry.getHackerNumber());
             baseCountry.setHackerNumber(baseCountry.getHackerNumber() - Integer.parseInt(hackerNum_menu.getText()));
             targetCountry.setHackerNumber(targetCountry.getHackerNumber() + Integer.parseInt(hackerNum_menu.getText()));
+            hack_btn.setText("HACK");
             enableMap();
             updateScene(baseCountry,targetCountry);
+            baseCountry = null;
+            targetCountry = null;
         }
     }
 
@@ -503,44 +544,6 @@ public class GameManager implements Initializable
     {
         turnType = 4;
         startTurn(turnType);
-    }
-
-    public Country setBaseCountry(MouseEvent e)
-    {
-        ImageView x = (ImageView)e.getSource();
-        System.out.println(x.getId());
-        int countryIndex = Integer.parseInt(x.getId().substring(3));
-        for(Country c : players.get(turnOwner - 1).getCountries()){
-            if(c.getId() == countryIndex)
-                baseCountry = c;
-        }
-        baseSelected = true;
-        return baseCountry;
-    }
-
-    public Country setTargetCountry(MouseEvent e) {
-        ImageView x = (ImageView) e.getSource();
-        System.out.println(x.getId());
-        int countryIndex = Integer.parseInt(x.getId().substring(3));
-        for (Player p : players) {
-            if (p != players.get(turnOwner-1)) {
-                for (Country c : p.getCountries()) {
-                    if (c.getId() == countryIndex)
-                        targetCountry = c;
-                }
-            }
-        }
-        return targetCountry;
-    }
-
-    void setDestinationCountry(MouseEvent e) {
-        ImageView x = (ImageView) e.getSource();
-        System.out.println(x.getId());
-        int countryIndex = Integer.parseInt(x.getId().substring(3));
-        for(Country c : players.get(turnOwner - 1).getCountries()){
-            if(c.getId() == countryIndex)
-                targetCountry = c;
-        }
     }
 
     @FXML

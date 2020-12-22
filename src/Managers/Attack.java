@@ -45,8 +45,6 @@ public class Attack extends PingManager {
         attackersCountry.setHackerNumber(numOfAttackerHackers - roll.defenderWins);
         defendersCountry.setHackerNumber(numOfDefenderHackers - roll.attackerWins);
 
-
-
     }
 }
 
