@@ -1,8 +1,11 @@
 package Managers;
 
+import StorageRelatedClasses.Card;
 import StorageRelatedClasses.Country;
 import StorageRelatedClasses.Player;
 import javafx.scene.input.MouseEvent;
+
+import java.util.ArrayList;
 
 public class Hack{
 
@@ -39,9 +42,9 @@ public class Hack{
     }
 
     void giveCard(){
-        //if(attackIsSuccessful)
-        //turnManager.turnOwner
-
+        ArrayList<Card> cards = baseCountry.getOwner().getCards();
+        cards.add(new Card(baseCountry.getOwner()));
+        baseCountry.getOwner().setCards(cards);
     }
 
 }

@@ -214,11 +214,9 @@ public class GameManager implements Initializable
             hire_btn.setDisable(true);
             hack_btn.setDisable(false);
             fortify_btn.setDisable(true);
-            cards_img.setDisable(true);
         }
         else if (turnType == 3){
             infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Fortify");
-            cards_img.setDisable(true);
             hire_btn.setDisable(true);
             hack_btn.setDisable(true);
             fortify_btn.setDisable(false);
@@ -268,6 +266,35 @@ public class GameManager implements Initializable
             updateScene(baseCountry, targetCountry);
             enableMap();
         }
+        updateCardsScene();
+    }
+
+
+
+    private void updateCardsScene() {
+        Player currentPlayer = players.get(turnOwner - 1);
+        for (int i = 0; i < currentPlayer.getCards().size(); i++)
+        {
+            Pane pane = (Pane) cards_hbox.getChildren().get(i);
+            ImageView imageView = (ImageView) pane.getChildren().get(0);
+            int cardType = currentPlayer.getCards().get(i).getType();
+            if (cardType == 1)
+                imageView.setImage(new Image("/Pictures/lCard.jpg"));
+            else if (cardType == 2)
+                imageView.setImage(new Image("/Pictures/wCard.jpg"));
+            else if (cardType == 3)
+                imageView.setImage(new Image("/Pictures/gCard.jpg"));
+            else if (cardType == 4)
+                imageView.setImage(new Image("/Pictures/bCard.jpg"));
+        }
+    }
+
+
+
+    @FXML
+    public void combineCardsClicked()
+    {
+
     }
 
     public void disableMap(){
@@ -539,6 +566,7 @@ public class GameManager implements Initializable
             }
         }
         else if(hack_btn.getText().equals("MOVE")){
+            infoGame_lbl.setText("You gained a new card! Check your cards box!");
             System.out.println("menu " + hackerNum_menu.getText());
             System.out.println("basecountryhacekrafterhack" + baseCountry.getHackerNumber());
             baseCountry.setHackerNumber(baseCountry.getHackerNumber() - Integer.parseInt(hackerNum_menu.getText()));
@@ -575,6 +603,7 @@ public class GameManager implements Initializable
     @FXML
     public void cardsClicked()
     {
+        System.out.println("anankee");
         if (!cards_pane.isVisible())
             cards_pane.setVisible(true);
         else
