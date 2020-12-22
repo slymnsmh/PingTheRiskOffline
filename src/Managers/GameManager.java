@@ -70,6 +70,7 @@ public class GameManager implements Initializable
     public static Country baseCountry;
     public static Country targetCountry;
     int turnType;
+    public boolean first = true;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -130,6 +131,13 @@ public class GameManager implements Initializable
     }
 
     public void startTurn(int turnType) {
+        if (first == true){
+            for (Player p : players)
+            {
+                p.setNumOfBonusHackers(3);
+            }
+            first = false;
+        }
         decidePart(turnType);
     }
 
@@ -208,7 +216,12 @@ public class GameManager implements Initializable
 
     public void startHirePart(){
         if (baseCountry != null) {
-            Hire hire = new Hire(players.get(turnOwner - 1), baseCountry, Integer.parseInt(hackerNum_menu.getText()));
+            if(players.get(turnOwner - 1).getNumOfBonusHackers() != 0)
+            {
+                Hire hire = new Hire(players.get(turnOwner - 1), baseCountry, Integer.parseInt(hackerNum_menu.getText()));
+            }
+            else
+                System.out.println("goHack");
         }
     }
 
@@ -228,6 +241,7 @@ public class GameManager implements Initializable
     public void endTurn(){
         turnOwner++;
         turnType = 1;
+        first = true;
         startTurn(turnType);
     }
 

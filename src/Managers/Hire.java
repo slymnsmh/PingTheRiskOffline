@@ -40,7 +40,12 @@ public class Hire
 
     void addNumOfHackers()
     {
-        turnOwner.setNumOfHackers(turnOwner.getNumOfHackers() + numOfHackers);
+        if ( turnOwner.getNumOfBonusHackers() != 0)
+        {
+            turnOwner.setNumOfHackers(turnOwner.getNumOfHackers() + numOfHackers);
+            turnOwner.setNumOfBonusHackers(turnOwner.getNumOfBonusHackers() - numOfHackers);
+        }
+
 //        numOfHackers = numOfHackers + 3;
 //        if(p.getNumOfBonusCards().isEmpty() != false) {
 //            int hackerCount = 0;
