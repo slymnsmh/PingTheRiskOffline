@@ -27,6 +27,8 @@ public class Hack{
     void startAttack(){
         Attack attack = new Attack(baseCountry.getOwner(), targetCountry.getOwner(), baseCountry, targetCountry);
         if(targetCountry.getHackerNumber() == 0){
+            targetCountry.getOwner().getCountries().remove(targetCountry);
+            baseCountry.getOwner().getCountries().add(targetCountry);
             targetCountry.setOwner(baseCountry.getOwner());
             targetCountry.setHackerNumber(1);
             baseCountry.setHackerNumber(baseCountry.getHackerNumber() - 1);
