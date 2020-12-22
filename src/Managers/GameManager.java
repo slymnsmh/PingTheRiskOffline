@@ -420,6 +420,14 @@ public class GameManager implements Initializable
         }
     }
 
+    public void hideArrows()
+    {
+        for (int i = TOTAL_NUM_OF_COUNTRIES * 2; i < map_pane.getChildren().size(); i++)
+        {
+            map_pane.getChildren().get(i).setVisible(false);
+        }
+    }
+
     @FXML
     public void regionClicked(MouseEvent e)
     {
@@ -430,7 +438,8 @@ public class GameManager implements Initializable
             int countryIndex = Integer.parseInt(x.getId().substring(3));
             for(Country c : players.get(turnOwner - 1).getCountries()){
                 if(c.getId() == countryIndex) {
-                    map_pane.getChildren().get(c.getId() + (TOTAL_NUM_OF_COUNTRIES * 2)).setVisible(true);
+                    hideArrows();
+                    map_pane.getChildren().get(c.getId() + (TOTAL_NUM_OF_COUNTRIES * 2) - 1).setVisible(true);
                     baseCountry = c;
                 }
             }
@@ -445,11 +454,13 @@ public class GameManager implements Initializable
                 for (Country c : p.getCountries()){
                     if(c.getId() == countryIndex){
                         if(c.getOwner() == players.get(turnOwner -1)){
-                            map_pane.getChildren().get(c.getId() + (TOTAL_NUM_OF_COUNTRIES * 2)).setVisible(true);
+                            hideArrows();
+                            map_pane.getChildren().get(c.getId() + (TOTAL_NUM_OF_COUNTRIES * 2) - 1).setVisible(true);
                             baseCountry = c;
                         }
                         else {
-                            map_pane.getChildren().get(c.getId() + (TOTAL_NUM_OF_COUNTRIES * 2)).setVisible(true);
+                            hideArrows();
+                            map_pane.getChildren().get(c.getId() + (TOTAL_NUM_OF_COUNTRIES * 2) - 1).setVisible(true);
                             targetCountry = c;
                         }
                     }
