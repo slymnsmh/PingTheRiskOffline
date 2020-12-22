@@ -30,7 +30,7 @@ public class Player
         this.countries = null;
     }
 
-    public Player( int id, String ip, String port, int gameId, String nickname, String color, int numOfHackers, int numOfCountries, ArrayList<Integer> countries, int numOfWins, int numOfLosses, int numOfBonusCards, int numOfBonusHackers, boolean isOnline )
+    public Player( int id, String ip, String port, int gameId, String nickname, String color, int numOfHackers, int numOfCountries, ArrayList<Country> countries, int numOfWins, int numOfLosses, int numOfBonusCards, int numOfBonusHackers, boolean isOnline )
     {
         this.nickname = nickname;
         this.color = color;

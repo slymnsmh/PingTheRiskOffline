@@ -1,11 +1,13 @@
 package Managers;
 
+import Scene.GameScene;
 import StorageRelatedClasses.Country;
 import StorageRelatedClasses.Database;
 import StorageRelatedClasses.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -49,14 +51,19 @@ public class GameManager implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        players = GameScene.players;
         playerNumber = players.size();
         hackerNumBeginning = TOTAL_NUM_OF_HACKERS / playerNumber;
         countryNumBeginning = TOTAL_NUM_OF_COUNTRIES / playerNumber;
-        startGame();
+        try {
+            startGame();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getCountriesFromFile() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("/StorageRelatedClasses/Countries.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader("src/StorageRelatedClasses/Countries.txt"));
         String line = reader.readLine();
         while (line != null)
         {
@@ -69,44 +76,81 @@ public class GameManager implements Initializable
             String location = line;
             Country country = new Country(Integer.parseInt(countryId), countryName, location);
             allCountries.add(country);
+            line = reader.readLine();
         }
     }
 
-    public void startGame() {
+    public void startGame() throws IOException {
+        getCountriesFromFile();
         assignColorsToPlayers();
         assignHackerNumsToPlayers();
         assignCountriesToPlayers();
         assignHackerNumsToCountries();
         int counter = 0;
-        String nicknames = "";
-        for (Player p : ServerController.players)
-        {
-            if (lobby.getPlayerIds().contains(String.valueOf(p.getId()))) {
-                nicknames += p.getNickname() + ",";
-                counter++;
-                System.out.println("PLAYER: " + counter);
-                System.out.println("ID: " + p.getId());
-                System.out.println("NICK: " + p.getNickname());
-                System.out.println("COLOR: " + p.getColor());
-                for (int i = 0; i < p.getCountries().size(); i++) {
-                    System.out.println("COUNTRY " + i + ": " + p.getCountries().get(i) + " -> hacker num: " + allCountries.get(p.getCountries().get(i) - 1).hackerNumber);
+        for (Player p : players) {
+            counter++;
+            System.out.println("PLAYER: " + counter);
+            System.out.println("NICK: " + p.getNickname());
+            System.out.println("COLOR: " + p.getColor());
+            for (int i = 0; i < p.getCountries().size(); i++) {
+                System.out.println("COUNTRY " + i + ": " + p.getCountries().get(i) + " -> hacker num: " + p.getCountries().get(i).getHackerNumber());
+            }
+            System.out.println("NUM OF COUNTRIES: " + p.getNumOfCountries());
+            System.out.println("NUM OF HACKERS: " + p.getNumOfHackers());
+        }
+    }
+
+    /*private void setCountryColors() {
+        ArrayList<String> ownerIdsArray = divideString(ownerIds);
+        ArrayList<String> playerIdsArray = divideString(playerIds);
+        for (int i = 0; i < Integer.parseInt(total_num_countries); i++) {
+            ImageView countryImageView = (ImageView) map_pane.getChildren().get(i);
+            if (playerIdsArray.size() >= 1) {
+                if (ownerIdsArray.get(i).equals(playerIdsArray.get(0))) {
+                    countryImageView.setImage(new Image("/MapComponents/" + (i + 1) + "/" + (i + 1) + "b.png"));
+                    continue;
                 }
-                System.out.println("NUM OF COUNTRIES: " + p.getNumOfCountries());
-                System.out.println("NUM OF HACKERS: " + p.getNumOfHackers());
+            }
+            if (playerIdsArray.size() >= 2) {
+                if (ownerIdsArray.get(i).equals(playerIdsArray.get(1))) {
+                    countryImageView.setImage(new Image("/MapComponents/" + (i + 1) + "/" + (i + 1) + "r.png"));
+                    continue;
+                }
+            }
+            if (playerIdsArray.size() >= 3) {
+                if (ownerIdsArray.get(i).equals(playerIdsArray.get(2))) {
+                    countryImageView.setImage(new Image("/MapComponents/" + (i + 1) + "/" + (i + 1) + "g.png"));
+                    continue;
+                }
+            }
+            if (playerIdsArray.size() >= 4) {
+                if (ownerIdsArray.get(i).equals(playerIdsArray.get(3))) {
+                    countryImageView.setImage(new Image("/MapComponents/" + (i + 1) + "/" + (i + 1) + "o.png"));
+                }
             }
         }
-        nicknames = nicknames.substring(0, nicknames.length() - 1);
-        out.writeUTF(String.valueOf(lobby.getNumOfPlayers()));
-        out.writeUTF(lobby.getPlayerIds());
-        //send colors !!!!!!!!
-        out.writeUTF(nicknames);
-        out.writeUTF(String.valueOf(TOTAL_NUM_OF_COUNTRIES));
-        for (int i = 0; i < TOTAL_NUM_OF_COUNTRIES; i++) {
-            out.writeUTF(String.valueOf(allCountries.get(i).owner.getId()));
+    }*/
+
+    public ArrayList<String> divideString(String strWillBeDivided)
+    {
+        ArrayList<String> allParts = new ArrayList<>();
+
+        while (!strWillBeDivided.equals("")) {
+            int index = 0;
+            if (strWillBeDivided.contains(",")) {
+                while (strWillBeDivided.charAt(index) != ',') {
+                    index++;
+                }
+                String part = strWillBeDivided.substring(0, index);
+                allParts.add(part);
+                strWillBeDivided = strWillBeDivided.substring(index + 1);
+            }
+            else {
+                allParts.add(strWillBeDivided);
+                strWillBeDivided = "";
+            }
         }
-        for (int i = 0; i < TOTAL_NUM_OF_COUNTRIES; i++) {
-            out.writeUTF(String.valueOf(allCountries.get(i).hackerNumber));
-        }
+        return allParts;
     }
 
     public void assignColorsToPlayers()
@@ -129,17 +173,20 @@ public class GameManager implements Initializable
     public void assignCountriesToPlayers() {
         for (Player p : players) {
             ArrayList<Country> countries = new ArrayList<>();
-            ArrayList<Integer> countryNumbers = generateRandomCountryNumbers(p);
+            ArrayList<Integer> countryNumbers = generateRandomCountryNumbers(); //25 - 32 - 21
             for (int i : countryNumbers)
             {
                 countries.add(allCountries.get(i - 1));
             }
             p.setCountries(countries);
             p.setNumOfCountries(countryNumBeginning);
+            for (Country c : countries) {
+                c.setOwner(p);
+            }
         }
     }
 
-    public ArrayList<Integer> generateRandomCountryNumbers(Player player)
+    public ArrayList<Integer> generateRandomCountryNumbers()
     {
         int[] countryNumbers = new int[countryNumBeginning];
         int counter = 0;
@@ -179,31 +226,14 @@ public class GameManager implements Initializable
         for (Country country : allCountries)
         {
             if (checker.equals("..")) {
-                country.getHackerNumber() = minHackerForACountry + 1;
-                System.out.println(country.id + " -> hacker num ===> " + country.hackerNumber);
+                country.setHackerNumber(minHackerForACountry + 1);
+                System.out.println(country.getId() + " -> hacker num ===> " + country.getHackerNumber());
                 checker = "";
             }
             else if (checker.equals("") || checker.equals(".")) {
-                country.hackerNumber = minHackerForACountry;
-                System.out.println(country.id + " -> hacker num ===> " + country.hackerNumber);
+                country.setHackerNumber(minHackerForACountry);
+                System.out.println(country.getId() + " -> hacker num ===> " + country.getHackerNumber());
                 checker += ".";
-            }
-        }
-        for (int i = 0; i < playerIds.size(); i++) {
-            for (Player p : ServerController.players) {
-                if (p.getId() == Integer.parseInt(playerIds.get(i))) {
-                    for (Integer countryId : p.getCountries())
-                    {
-                        for (Country country : allCountries)
-                        {
-                            if (countryId == country.id)
-                            {
-                                country.owner = p;
-                                break;
-                            }
-                        }
-                    }
-                }
             }
         }
     }
@@ -236,7 +266,7 @@ public class GameManager implements Initializable
 
     }
 
-    public void startTurn(int turnOwner) {
+    /*public void startTurn(int turnOwner) {
         this.turnOwner = turnOwner;
         TurnManager turnManager = new TurnManager(turnOwner, getPlayerSockets());
     }
@@ -266,7 +296,7 @@ public class GameManager implements Initializable
     public void uploadDatabase()
     {
         //When the game finished, upload all game info to database
-    }
+    }*/
 
     /*@FXML
     public void howToPlayClicked()
@@ -276,7 +306,7 @@ public class GameManager implements Initializable
     public void settingsClicked()
     {}*/
 
-    public void assignColorsToCountries()
+    /*public void assignColorsToCountries()
     {}
 
     public boolean checkIfFinished()
@@ -287,7 +317,7 @@ public class GameManager implements Initializable
     public void setTurnOwner(int turnOwner)
     {
         this.turnOwner = turnOwner;
-    }
+    }*/
 
     //Oyunculara renk ata
     //Oyunculara hacker sayısı ata
