@@ -72,6 +72,7 @@ public class GameManager implements Initializable
     public static Country targetCountry;
     int turnType;
     public boolean first = true;
+    int click = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -234,7 +235,6 @@ public class GameManager implements Initializable
             startHack();
         }
         else if(turnType == 3){
-            setHackerNumMenu(0, false);
             startFortifyPart();
         }
         else
@@ -283,7 +283,7 @@ public class GameManager implements Initializable
     }
 
     public void startFortifyPart(){
-        //Fortify fortify = new Fortify(turnOwner);
+        Fortify fortify = new Fortify(baseCountry, targetCountry, Integer.parseInt(hackerNum_menu.getText()));
     }
 
     public void giveBonusHackers(){
@@ -431,11 +431,11 @@ public class GameManager implements Initializable
     @FXML
     public void regionClicked(MouseEvent e)
     {
+        ImageView x = (ImageView)e.getSource();
+        System.out.println(x.getId());
+        int countryIndex = Integer.parseInt(x.getId().substring(3));
         if (turnType == 1)
         {
-            ImageView x = (ImageView)e.getSource();
-            System.out.println(x.getId());
-            int countryIndex = Integer.parseInt(x.getId().substring(3));
             for(Country c : players.get(turnOwner - 1).getCountries()){
                 if(c.getId() == countryIndex) {
                     hideArrows();
@@ -446,10 +446,6 @@ public class GameManager implements Initializable
         }
         else if (turnType == 2)
         {
-            ImageView x = (ImageView)e.getSource();
-            System.out.println(x.getId());
-            int countryIndex = Integer.parseInt(x.getId().substring(3));
-
             for (Player p : players) {
                 for (Country c : p.getCountries()){
                     if(c.getId() == countryIndex){
@@ -472,7 +468,23 @@ public class GameManager implements Initializable
                 setHackerNumMenu(baseCountry.getHackerNumber(), false);
         }
         else{
-
+            for (Country c : players.get(turnOwner - 1).getCountries()) {
+                if (c.getId() == countryIndex) {
+                    hideArrows();
+                    map_pane.getChildren().get(c.getId() + (TOTAL_NUM_OF_COUNTRIES * 2) - 1).setVisible(true);
+                    if(click % 2 == 0) {
+                        targetCountry = null;
+                        baseCountry = c;
+                    }
+                    else
+                        targetCountry = c;
+                    click++;
+                }
+            }
+            if(baseCountry != null)
+                setHackerNumMenu(baseCountry.getHackerNumber(), false);
+            else
+                hackerNum_menu.setText("0");
         }
     }
 
@@ -487,6 +499,7 @@ public class GameManager implements Initializable
             updateScene(baseCountry, null);
             if (players.get(turnOwner - 1).getNumOfBonusHackers() == 0){
                 infoGame_lbl.setText("No hackers left to hire. Go to hack phase!");
+                hackerNum_menu.setText("0");
             }
         }
     }
@@ -529,7 +542,6 @@ public class GameManager implements Initializable
             }
             else if(baseCountry.getHackerNumber() <= 1)
             {
-                System.out.println("gir aq");
                 infoGame_lbl.setText("Choose a country with more hackers!");
             }
             else
@@ -539,8 +551,6 @@ public class GameManager implements Initializable
             }
         }
         else if(hack_btn.getText().equals("MOVE")){
-            System.out.println("menu " + hackerNum_menu.getText());
-            System.out.println("basecountryhacekrafterhack" + baseCountry.getHackerNumber());
             baseCountry.setHackerNumber(baseCountry.getHackerNumber() - Integer.parseInt(hackerNum_menu.getText()));
             targetCountry.setHackerNumber(targetCountry.getHackerNumber() + Integer.parseInt(hackerNum_menu.getText()));
             hack_btn.setText("HACK");
@@ -548,14 +558,23 @@ public class GameManager implements Initializable
             updateScene(baseCountry,targetCountry);
             baseCountry = null;
             targetCountry = null;
+            hackerNum_menu.setText("0");
         }
     }
 
     @FXML
     public void fortifyClicked()
     {
-        turnType = 4;
-        startTurn(turnType);
+        if(baseCountry == null)
+            infoGame_lbl.setText("You must select a country to send hackers!");
+        else if (targetCountry == null)
+            infoGame_lbl.setText("You must select a country to get hackers!");
+        else if (baseCountry == targetCountry)
+            infoGame_lbl.setText("Base country and target country can't be same. Please select new ones!");
+        else{
+            startTurn(turnType);
+            updateScene(baseCountry, targetCountry);
+        }
     }
 
     @FXML
