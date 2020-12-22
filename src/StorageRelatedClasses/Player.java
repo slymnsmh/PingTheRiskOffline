@@ -13,7 +13,6 @@ public class Player
     private int numOfCountries;
     private ArrayList<Country> countries;
     private int numOfWins;
-    private int numOfLosses;
     private int numOfBonusCards;
     private int numOfBonusHackers;
     ArrayList<Card> cards = new ArrayList<>();
@@ -24,7 +23,6 @@ public class Player
         this.numOfHackers = 0;
         this.numOfCountries = 0;
         this.numOfWins = 0;
-        this.numOfLosses = 0;
         this.numOfBonusCards = 0;
         this.numOfBonusHackers = 0;
         this.countries = null;
@@ -38,7 +36,6 @@ public class Player
         this.numOfCountries = numOfCountries;
         this.countries = countries;
         this.numOfWins = numOfWins;
-        this.numOfLosses = numOfLosses;
         this.numOfBonusCards = numOfBonusCards;
         this.numOfBonusHackers = numOfBonusHackers;
     }
@@ -109,16 +106,6 @@ public class Player
     public void setNumOfWins( int numOfWins )
     {
         this.numOfWins = numOfWins;
-    }
-
-    public int getNumOfLosses()
-    {
-        return numOfLosses;
-    }
-
-    public void setNumOfLosses( int numOfLosses )
-    {
-        this.numOfLosses = numOfLosses;
     }
 
     public int getNumOfBonusCards()
