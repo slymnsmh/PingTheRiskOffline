@@ -2,7 +2,6 @@ package Managers;
 
 import Scene.GameScene;
 import StorageRelatedClasses.Country;
-import StorageRelatedClasses.Database;
 import StorageRelatedClasses.Player;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,18 +21,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.concurrent.ForkJoinPool;
 
 public class GameManager implements Initializable
 {
@@ -91,10 +84,15 @@ public class GameManager implements Initializable
     @FXML
     public void nextPhaseClicked()
     {
-        turnType++;
-        disableNodes();
-        baseCountry = null;
-        targetCountry = null;
+        if(nextPhase_btn.getText().equals("Next Phase")) {
+            turnType++;
+            disableNodes();
+            baseCountry = null;
+            targetCountry = null;
+        }
+        else{
+            endTurn();
+        }
     }
 
     public void getCountriesFromFile() throws IOException {
@@ -196,6 +194,10 @@ public class GameManager implements Initializable
 
     public void showTurnOwner()
     {
+        for(int i = 0; i < nicknames_vbox.getChildren().size(); i++){
+            Label label = (Label) nicknames_vbox.getChildren().get(i);
+            label.setStyle("-fx-border-color: transparent;");
+        }
         Label label = (Label) nicknames_vbox.getChildren().get(turnOwner - 1);
         label.setStyle("-fx-border-color: white;");
     }
@@ -223,6 +225,7 @@ public class GameManager implements Initializable
             hire_btn.setDisable(true);
             hack_btn.setDisable(true);
             fortify_btn.setDisable(false);
+            nextPhase_btn.setText("End Turn");
         }
     }
 
@@ -291,10 +294,30 @@ public class GameManager implements Initializable
     }
 
     public void endTurn(){
-        turnOwner++;
-        turnType = 1;
-        first = true;
-        startTurn(turnType);
+        if(players.size() >= 2) {
+            for (Player p : players) {
+                if (p.getCountries().size() == 0) {
+                    players.remove(p);
+                    showNicknames();
+                }
+            }
+            if (players.size() == turnOwner)
+                turnOwner = 0;
+            turnOwner++;
+            turnType = 1;
+            first = true;
+            showTurnOwner();
+            nextPhase_btn.setText("Next Phase");
+            disableNodes();
+            baseCountry = null;
+            targetCountry = null;
+            assignBonusHackers();
+            setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false);
+            startTurn(turnType);
+        }
+        else{
+            endGame();
+        }
     }
 
     public void setCountryColors() {
@@ -482,7 +505,7 @@ public class GameManager implements Initializable
                 }
             }
             if(baseCountry != null)
-                setHackerNumMenu(baseCountry.getHackerNumber(), false);
+                setHackerNumMenu(baseCountry.getHackerNumber() - 1, false);
             else
                 hackerNum_menu.setText("0");
         }
@@ -515,7 +538,7 @@ public class GameManager implements Initializable
                         break;
                     }
                 }
-            } else if (turnType == 2) {
+            } else {
                 int cId = baseCountry.getId();
                 int cId2 = targetCountry.getId();
                 for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size() - TOTAL_NUM_OF_COUNTRIES; i++) {
@@ -527,8 +550,6 @@ public class GameManager implements Initializable
                         label.setText(targetCountry.getHackerNumber() + "");
                     }
                 }
-            } else {
-
             }
         }
     }
@@ -571,7 +592,12 @@ public class GameManager implements Initializable
             infoGame_lbl.setText("You must select a country to get hackers!");
         else if (baseCountry == targetCountry)
             infoGame_lbl.setText("Base country and target country can't be same. Please select new ones!");
+        else if (baseCountry.getHackerNumber() <= 1){
+            infoGame_lbl.setText("There should be at least 1 hacker in base country!");
+        }
         else{
+            System.out.println("base " + baseCountry.getId());
+            System.out.println("target " + targetCountry.getId());
             startTurn(turnType);
             updateScene(baseCountry, targetCountry);
         }
@@ -600,29 +626,14 @@ public class GameManager implements Initializable
             cards_pane.setVisible(false);
     }
 
-
-
-
-
-
-
-/*    public void endGame()
+    public void endGame()
     {
-        if ( checkIfFinished() )
-        {
-            //Finish the game
-            uploadDatabase();
-        }
-        else
-        {
-            //Start next turn
-        }
-
+        infoGame_lbl.setText("WINNER IS: " + players.get(0) + " !!!!");
     }
 
 
 
-    public void uploadDatabase()
+   /* public void uploadDatabase()
     {
         //When the game finished, upload all game info to database
     }*/
@@ -641,11 +652,6 @@ public class GameManager implements Initializable
     public boolean checkIfFinished()
     {
         return false;
-    }
-
-    public void setTurnOwner(int turnOwner)
-    {
-        this.turnOwner = turnOwner;
     }*/
 
     //Oyunculara renk ata

@@ -693,6 +693,6 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Button fx:id="nextPhase_btn" layoutX="414.0" layoutY="495.0" mnemonicParsing="false" onAction="#nextPhaseClicked" text="Next phase" />
+      <Button fx:id="nextPhase_btn" layoutX="414.0" layoutY="495.0" mnemonicParsing="false" onAction="#nextPhaseClicked" text="Next Phase" />
    </children>
 </AnchorPane>

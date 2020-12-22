@@ -7,8 +7,6 @@ import javafx.scene.input.MouseEvent;
 public class Hack{
 
     static int distance;
-    boolean timesOut = false;
-    boolean attackIsSuccessful = false;
     Country baseCountry;
     Country targetCountry;
 
@@ -17,7 +15,6 @@ public class Hack{
         this.targetCountry = targetCountry;
         calculateDistance();
         startAttack();
-        boolean attackIsSuccessful = false;
     }
 
     void calculateDistance(){
