@@ -148,6 +148,12 @@ public class GameManager implements Initializable
     public void setHackerNumMenu(int hackerNum, boolean zero)
     {
         hackerNum_menu.getItems().clear();
+        if(hackerNum == 0)
+        {
+            hackerNum_menu.getItems().add(new MenuItem("0"));
+            hackerNum_menu.setText("0");
+            return;
+        }
         for (int i = 1; i <= hackerNum; i++)
         {
             if(zero) {
