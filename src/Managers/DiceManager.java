@@ -63,6 +63,11 @@ public class DiceManager {
             temp = (int) ((6.0 * Math.random() + 1));
             defendersScores.add(temp);
         }
+        for(int i = 0; i < attackersScores.size(); i++)
+            System.out.println("Attacker dice " + i + " -> " + attackersScores.get(i));
+        for(int i = 0; i < defendersScores.size(); i++)
+            System.out.println("Defender dice " + i + " -> " + defendersScores.get(i));
+        System.out.println("Range -> " + attackerRange);
     }
 
 

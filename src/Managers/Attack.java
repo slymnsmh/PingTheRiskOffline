@@ -8,9 +8,6 @@ public class Attack extends PingManager {
     Player defender;
     Country attackerCountry;
     Country defenderCountry;
-    Player winner;
-    Player loser;
-    int numOfDefenderHackers;
     PingManager pingManager;
     DiceManager roll;
 
@@ -22,14 +19,15 @@ public class Attack extends PingManager {
         this.defenderCountry = defendersCountry;
         pingManager = new PingManager();
         pingManager.setPing();
-        numOfDefenderHackers = defendersCountry.getHackerNumber();
 
-        roll = new DiceManager(Math.min(numOfAttackerHackers, 3), Math.min(numOfAttackerHackers, 2),
+        roll = new DiceManager(numOfAttackerHackers, Math.min(defenderCountry.getHackerNumber(), 2),
                 pingManager.pingLevel);
-        roll.compareBiggest(numOfAttackerHackers, numOfDefenderHackers);
+        roll.compareBiggest(numOfAttackerHackers, Math.min(defenderCountry.getHackerNumber(), 2));
 
-        attackersCountry.setHackerNumber(numOfAttackerHackers - roll.defenderWins);
-        defendersCountry.setHackerNumber(numOfDefenderHackers - roll.attackerWins);
+        System.out.println("defender wins " + roll.defenderWins);
+        System.out.println("attacker wins " + roll.attackerWins);
+        attackersCountry.setHackerNumber(attackerCountry.getHackerNumber() - roll.defenderWins);
+        defendersCountry.setHackerNumber(defenderCountry.getHackerNumber() - roll.attackerWins);
     }
 }
 

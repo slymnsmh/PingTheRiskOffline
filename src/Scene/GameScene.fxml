@@ -385,36 +385,36 @@
       </Pane>
       <VBox fx:id="nicknames_vbox" layoutX="42.0" layoutY="727.0" prefHeight="316.0" prefWidth="417.0" spacing="40.0">
          <children>
-            <Label fx:id="p1Nick_lbl" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: transparent;" text="-" textFill="WHITE">
+            <Label fx:id="p1Nick_lbl" style="-fx-background-color: transparent;" text="-" textFill="WHITE">
                <font>
                   <Font size="30.0" />
                </font>
                <padding>
-                  <Insets left="10.0" />
+                  <Insets left="10.0" right="10.0" />
                </padding>
             </Label>
-            <Label fx:id="p2Nick_lbl" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: transparent;" text="-" textFill="WHITE">
+            <Label fx:id="p2Nick_lbl" style="-fx-background-color: transparent;" text="-" textFill="WHITE">
                <font>
                   <Font size="30.0" />
                </font>
                <padding>
-                  <Insets left="10.0" />
+                  <Insets left="10.0" right="10.0" />
                </padding>
             </Label>
-            <Label fx:id="p3Nick_lbl" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: transparent;" text="-" textFill="WHITE">
+            <Label fx:id="p3Nick_lbl" style="-fx-background-color: transparent;" text="-" textFill="WHITE">
                <font>
                   <Font size="30.0" />
                </font>
                <padding>
-                  <Insets left="10.0" />
+                  <Insets left="10.0" right="10.0" />
                </padding>
             </Label>
-            <Label fx:id="p4Nick_lbl" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: transparent;" text="-" textFill="WHITE">
+            <Label fx:id="p4Nick_lbl" style="-fx-background-color: transparent;" text="-" textFill="WHITE">
                <font>
                   <Font size="30.0" />
                </font>
                <padding>
-                  <Insets left="10.0" />
+                  <Insets left="10.0" right="10.0" />
                </padding>
             </Label>
          </children>
