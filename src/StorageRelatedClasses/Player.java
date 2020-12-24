@@ -1,12 +1,10 @@
 package StorageRelatedClasses;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Random;
 
-public class Player
-{
+public class Player {
+    ArrayList<Card> cards = new ArrayList<>();
     private String nickname;
     private String color;
     private int numOfHackers;
@@ -15,7 +13,6 @@ public class Player
     private int numOfWins;
     private int numOfBonusCards;
     private int numOfBonusHackers;
-    ArrayList<Card> cards = new ArrayList<>();
 
     public Player(String nickname) throws SQLException {
         this.nickname = nickname;
@@ -28,8 +25,9 @@ public class Player
         this.countries = null;
     }
 
-    public Player( int id, String ip, String port, int gameId, String nickname, String color, int numOfHackers, int numOfCountries, ArrayList<Country> countries, int numOfWins, int numOfLosses, int numOfBonusCards, int numOfBonusHackers, boolean isOnline )
-    {
+    public Player(int id, String ip, String port, int gameId, String nickname, String color, int numOfHackers,
+                  int numOfCountries, ArrayList<Country> countries, int numOfWins, int numOfLosses,
+                  int numOfBonusCards, int numOfBonusHackers, boolean isOnline) {
         this.nickname = nickname;
         this.color = color;
         this.numOfHackers = numOfHackers;
@@ -48,83 +46,67 @@ public class Player
         this.cards = cards;
     }
 
-    public String getNickname()
-    {
+    public String getNickname() {
         return nickname;
     }
 
-    public void setNickname( String nickname )
-    {
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
-    public String getColor()
-    {
+    public String getColor() {
         return color;
     }
 
-    public void setColor( String color )
-    {
+    public void setColor(String color) {
         this.color = color;
     }
 
-    public int getNumOfHackers()
-    {
+    public int getNumOfHackers() {
         return numOfHackers;
     }
 
-    public void setNumOfHackers( int numOfHackers )
-    {
+    public void setNumOfHackers(int numOfHackers) {
         this.numOfHackers = numOfHackers;
     }
 
-    public int getNumOfCountries()
-    {
+    public int getNumOfCountries() {
         return numOfCountries;
     }
 
-    public void setNumOfCountries( int numOfRegions )
-    {
+    public void setNumOfCountries(int numOfRegions) {
         this.numOfCountries = numOfRegions;
     }
 
-    public ArrayList<Country> getCountries()
-    {
+    public ArrayList<Country> getCountries() {
         return countries;
     }
 
-    public void setCountries( ArrayList<Country> countries )
-    {
+    public void setCountries(ArrayList<Country> countries) {
         this.countries = countries;
     }
 
-    public int getNumOfWins()
-    {
+    public int getNumOfWins() {
         return numOfWins;
     }
 
-    public void setNumOfWins( int numOfWins )
-    {
+    public void setNumOfWins(int numOfWins) {
         this.numOfWins = numOfWins;
     }
 
-    public int getNumOfBonusCards()
-    {
+    public int getNumOfBonusCards() {
         return numOfBonusCards;
     }
 
-    public void setNumOfBonusCards( int numOfBonusCards )
-    {
+    public void setNumOfBonusCards(int numOfBonusCards) {
         this.numOfBonusCards = numOfBonusCards;
     }
 
-    public int getNumOfBonusHackers()
-    {
+    public int getNumOfBonusHackers() {
         return numOfBonusHackers;
     }
 
-    public void setNumOfBonusHackers( int numOfBonusHackers )
-    {
+    public void setNumOfBonusHackers(int numOfBonusHackers) {
         this.numOfBonusHackers = numOfBonusHackers;
     }
 }

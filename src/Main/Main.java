@@ -1,9 +1,11 @@
 package Main;
 
-import Scene.MainScene;
 import javafx.application.Application;
-import javafx.scene.image.Image;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Main extends Application
 {
@@ -13,12 +15,14 @@ public class Main extends Application
     public void start(Stage primaryStage) throws Exception
     {
         stage = primaryStage;
-        MainScene mainScene = new MainScene();
+        Parent root = FXMLLoader.load(getClass().getResource("/Scene/MainScene.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
         stage.setTitle("Ping The Risk v1.0");
 
-        //stage.setMaximized(true);
-        //stage.setFullScreen(true);
-        //stage.initStyle(StageStyle.UNDECORATED);
+        stage.setMaximized(true);
+        stage.setFullScreen(true);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 
