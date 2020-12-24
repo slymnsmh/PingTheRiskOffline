@@ -12,7 +12,7 @@ public class GameScene {
     public static ArrayList<Player> players;
 
     public GameScene(ArrayList<Player> players) throws IOException {
-        this.players = players;
+        GameScene.players = players;
         Parent root = FXMLLoader.load(getClass().getResource("/Scene/GameScene.fxml"));
         Main.stage.getScene().setRoot(root);
     }

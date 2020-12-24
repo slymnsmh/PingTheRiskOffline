@@ -114,7 +114,7 @@ public class GameManager implements Initializable {
 
     @FXML
     public void nextPhaseClicked() {
-        if (nextPhase_btn.getText().equals("Next Phase")) {
+        if (nextPhase_btn.getText().equals("NEXT PHASE")) {
             turnType++;
             disableNodes();
             baseCountry = null;
@@ -232,7 +232,7 @@ public class GameManager implements Initializable {
             fortify_btn.setDisable(false);
             cards_pane.setVisible(false);
             hideArrows();
-            nextPhase_btn.setText("End Turn");
+            nextPhase_btn.setText("END TURN");
         }
     }
 
@@ -319,7 +319,7 @@ public class GameManager implements Initializable {
             turnType = 1;
             first = true;
             showTurnOwner();
-            nextPhase_btn.setText("Next Phase");
+            nextPhase_btn.setText("NEXT PHASE");
             disableNodes();
             baseCountry = null;
             targetCountry = null;
@@ -363,7 +363,7 @@ public class GameManager implements Initializable {
     }
 
     public void setCountryHackerNumLabels() {
-        for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size() - TOTAL_NUM_OF_COUNTRIES; i++) {
+        for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size(); i++) {
             Label label = (Label) map_pane.getChildren().get(i);
             label.setText(allCountries.get(i - TOTAL_NUM_OF_COUNTRIES).getHackerNumber() + "");
         }
@@ -453,32 +453,15 @@ public class GameManager implements Initializable {
             map_pane.getChildren().get(countryIndex + (TOTAL_NUM_OF_COUNTRIES * 2) - 1).setVisible(true);
             baseCountry = allCountries.get(countryIndex - 1);
         } else if (turnType == 2) {
-            if(baseCountry == null){
+            if(allCountries.get(countryIndex - 1).getOwner() == players.get(turnOwner - 1)){
                 map_pane.getChildren().get(countryIndex + (TOTAL_NUM_OF_COUNTRIES * 2) - 1).setVisible(true);
                 baseCountry = allCountries.get(countryIndex - 1);
-                disableCurrentPlayersCountries(players.get(turnOwner - 1));
+                enableMap();
+                setHackerNumMenu(Math.min(baseCountry.getHackerNumber() - 1, 3), false);
             }
             else {
                 map_pane.getChildren().get(countryIndex + (TOTAL_NUM_OF_COUNTRIES * 2) - 1).setVisible(true);
                 targetCountry = allCountries.get(countryIndex - 1);
-            }
-            for (Player p : players) {
-                for (Country c : p.getCountries()) {
-                    if (c.getId() == countryIndex) {
-                        if (c.getOwner() == players.get(turnOwner - 1)) {
-                            hideArrows();
-                            map_pane.getChildren().get(c.getId() + (TOTAL_NUM_OF_COUNTRIES * 2) - 1).setVisible(true);
-                            baseCountry = c;
-                        } else {
-                            hideArrows();
-                            map_pane.getChildren().get(c.getId() + (TOTAL_NUM_OF_COUNTRIES * 2) - 1).setVisible(true);
-                            targetCountry = c;
-                        }
-                    }
-                }
-            }
-            if (baseCountry != null) {
-                setHackerNumMenu(Math.min(baseCountry.getHackerNumber() - 1, 3), false);
             }
         } else {
             for (Country c : players.get(turnOwner - 1).getCountries()) {
