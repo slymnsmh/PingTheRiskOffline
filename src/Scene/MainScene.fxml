@@ -18,6 +18,11 @@
                         <Font size="27.0" />
                     </font>
                 </Button>
+            <Button fx:id="settings_btn" minHeight="40.0" minWidth="250.0" mnemonicParsing="false" onAction="#settingsClicked" opacity="0.8" prefHeight="120.0" prefWidth="400.0" style="-fx-background-color: white; -fx-alignment: center-left;" text="SETTINGS">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Button>
                 <Button fx:id="credits_btn" minHeight="40.0" minWidth="250.0" mnemonicParsing="false" onAction="#creditsClicked" opacity="0.8" prefHeight="120.0" prefWidth="400.0" style="-fx-background-color: white; -fx-alignment: center-left;" text="CREDITS">
                     <font>
                         <Font size="27.0" />

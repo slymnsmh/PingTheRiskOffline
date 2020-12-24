@@ -12,8 +12,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 
+import java.io.File;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -25,13 +29,18 @@ public class MainSceneController implements Initializable
     @FXML public Button newGame_btn, settings_btn, credits_btn, howToPlay_btn, exit_btn;
     @FXML public Label info_lbl;
     ArrayList<Player> players;
+    public static MediaPlayer mediaPlayer;
+    public static Media media;
 
     //static AudioStream audios;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        //this.music();
+        String path = new File("src/Pictures/Solar.wav").getAbsolutePath();
+        media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
     }
 
     @FXML

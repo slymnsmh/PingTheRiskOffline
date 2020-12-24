@@ -2,6 +2,8 @@ package Controllers;
 
 import Main.Main;
 import Scene.MainScene;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,7 +13,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import sun.audio.AudioPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,7 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class SettingsSceneController implements Initializable {
+    @FXML public Slider sound_slider;
     @FXML
     ImageView background_img;
     @FXML
@@ -29,14 +31,21 @@ public class SettingsSceneController implements Initializable {
     Pane menu_pane;
     @FXML
     MenuButton display_menuBtn;
-    @FXML
-    Slider sound_slider;
 
-    public SettingsSceneController() {
+    @FXML
+    public void backClicked() throws IOException {
+        MainScene mainScene = new MainScene();
     }
 
     public void initialize(URL location, ResourceBundle resources) {
         this.readFile();
+        sound_slider.setValue(MainSceneController.mediaPlayer.getVolume() * 100);
+        sound_slider.valueProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                MainSceneController.mediaPlayer.setVolume(sound_slider.getValue() / 100);
+            }
+        });
     }
 
     @FXML

@@ -14,10 +14,9 @@ import javafx.scene.control.SplitMenuButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.Line;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -79,6 +78,7 @@ public class GameManager implements Initializable {
     public ImageView chosenCard1, chosenCard2, chosenCard3;
     public int turnOwner = 1;
     public boolean first = true;
+    @FXML public AnchorPane anchor_pane;
     ArrayList<Player> players;
     int playerNumber;
     String[] allColors = {"BLUE", "RED", "GREEN", "ORANGE"};
