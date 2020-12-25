@@ -1,16 +1,16 @@
 package Managers;
 
+import Main.Main;
 import Scene.GameScene;
 import StorageRelatedClasses.*;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -49,6 +49,8 @@ public class GameManager implements Initializable {
             num34_lbl, num35_lbl, num36_lbl;
     @FXML
     public Label p1Nick_lbl, p2Nick_lbl, p3Nick_lbl, p4Nick_lbl;
+    @FXML
+    public Slider sound_slider;
     @FXML
     public Pane settings_pane;
     @FXML
@@ -115,6 +117,13 @@ public class GameManager implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        sound_slider.setValue(Main.mediaPlayer.getVolume() * 100);
+        sound_slider.valueProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                Main.mediaPlayer.setVolume(sound_slider.getValue() / 100);
+            }
+        });
     }
 
     @FXML
