@@ -166,9 +166,14 @@ public class GameManager implements Initializable {
     public void assignBonusHackers() {
         if (first) {
             for (Player p : players) {
-                p.setNumOfBonusHackers(40);
+                p.setNumOfBonusHackers(3);
             }
             first = false;
+        }
+
+        for(int i = 0; i < allCountries.size(); i++)
+        {
+
         }
     }
 
