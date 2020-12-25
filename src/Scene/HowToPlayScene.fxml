@@ -2,9 +2,11 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="main_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HowToPlayController">
+<AnchorPane fx:id="main_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HowToPlayController">
    <children>
       <fx:include fx:id="commonUI" source="CommonUI.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Button fx:id="back_btn" ellipsisString="" layoutX="169.0" layoutY="903.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backClicked" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE" textOverrun="CLIP" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="27.0">
@@ -12,5 +14,14 @@
             <Font name="System Bold" size="50.0" />
          </font>
       </Button>
+      <Pane fx:id="howToPlay_pane" layoutX="156.0" layoutY="130.0" opacity="0.8" prefHeight="812.0" prefWidth="1603.0">
+         <children>
+            <Text fill="WHITE" layoutX="67.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="After entering 2-4 player names at the start menu you can start the game by clicking New Game. At the start of the game each player willhave the same amount of resources which are 36 countries and 30 hackers divided into the player number and distributed randomly. Also, each player gains 3 hackers to hire at the beginning of their games. The beginning of each turn starts with the Hire part in which the player is supposed to use any cards they have and hire their free hackers by clicking on one of their countries and selecting the amount of hackers and pressing hire. The player can skip Hire part by clicking Next Phase. After skippping Hire part the player goes into Hack part in which the player is supposed to click one of his country to attack from and then select an enemy country to attack to. The distance between these countries applies a penalty in which 5 is the maximum and 1 is the minimum. If the player wins dice rolls and conqueres the country, he/she gains a card to be used in a later turn. The player can skip this part by clicking Next Phase.  The next and last part is the Fortify part in which the player is supposed to select two of his countries, first to take hackers from and second to reinforce hackers to. After selecting the countries, the player should select the amount of hackers and press Fortify. If the player presses Next Phase at this part,his turn ends and the next player's turn begins. When a player has no countries left he loses and when a player has all the countries he wins." wrappingWidth="1515.1996536254883">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.effect.InnerShadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="main_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SettingsSceneController">
    <children>
@@ -27,28 +19,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text fx:id="display_txt" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-text-alignment: right;" text="DISPLAY" wrappingWidth="250.0">
-               <font>
-                  <Font name="System Bold" size="60.0" />
-               </font>
-            </Text>
-            <MenuButton fx:id="display_menuBtn" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="450.0" style="-fx-padding: empty;" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
-              <items>
-                <MenuItem fx:id="menuItem1" mnemonicParsing="false" onAction="#menuItemClicked" text="1920x1080" />
-                  <MenuItem fx:id="menuItem2" mnemonicParsing="false" onAction="#menuItemClicked" text="1366x768" />
-                <MenuItem fx:id="menuItem3" mnemonicParsing="false" onAction="#menuItemClicked" text="1280x720" />
-                  <MenuItem fx:id="menuItem4" mnemonicParsing="false" onAction="#menuItemClicked" text="1024x768" />
-              </items>
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <effect>
-                  <InnerShadow />
-               </effect>
-               <GridPane.margin>
-                  <Insets right="10.0" />
-               </GridPane.margin>
-            </MenuButton>
             <Text fx:id="sound_txt" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-text-alignment: right;" text="SOUND" wrappingWidth="250.0" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="60.0" />
@@ -59,17 +29,6 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </Slider>
-            <Button fx:id="save_btn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveClicked" opacity="0.8" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: white; -fx-alignment: center; -fx-padding: 3;" text="SAVE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-               <font>
-                  <Font size="30.0" />
-               </font>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <GridPane.margin>
-                  <Insets right="10.0" />
-               </GridPane.margin>
-            </Button>
          </children>
       </GridPane>
       <Button fx:id="back_btn" ellipsisString="" layoutX="27.0" layoutY="930.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backClicked" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Back" textFill="WHITE" textOverrun="CLIP" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="27.0">
