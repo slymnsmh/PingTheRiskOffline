@@ -14,10 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -31,8 +29,6 @@ public class MainSceneController implements Initializable
     ArrayList<Player> players;
     public static MediaPlayer mediaPlayer;
     public static Media media;
-
-    //static AudioStream audios;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -99,28 +95,4 @@ public class MainSceneController implements Initializable
     {
         System.exit(0);
     }
-
-    /*public void music() {
-        try {
-            InputStream music = new FileInputStream(new File("src/Controllers/Solar.wav"));
-            audios = new AudioStream(music);
-            AudioPlayer.player.start(audios);
-        } catch (Exception var3) {
-            JOptionPane.showMessageDialog((Component)null, "Error");
-        }
-
-    }
-
-    public static AudioStream getMusic() {
-        return audios;
-    }*/
-
-    /*private void changeScene(String filePath) throws IOException
-    {
-        Parent newGameMenuParent = FXMLLoader.load(getClass().getResource(filePath));
-        Scene newGameMenuScene = new Scene(newGameMenuParent);
-        sample.Main.stage.setScene(newGameMenuScene);
-        sample.Main.stage.show();
-        CommonUIController.isSoundOn = isSoundOn;
-    }*/
 }

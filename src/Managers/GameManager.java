@@ -44,7 +44,7 @@ public class GameManager implements Initializable {
             num11_lbl, num12_lbl,
             num13_lbl, num14_lbl, num15_lbl, num16_lbl, num17_lbl, num18_lbl, num19_lbl, num20_lbl, num21_lbl,
             num22_lbl, num23_lbl,
-            num24_lbl, num25_lbl, num26_lbl, num27_lbl, num29_lbl, num30_lbl, num31_lbl, num32_lbl, num33_lbl,
+            num24_lbl, num25_lbl, num26_lbl, num27_lbl, num28_lbl, num29_lbl, num30_lbl, num31_lbl, num32_lbl, num33_lbl,
             num34_lbl, num35_lbl, num36_lbl;
     @FXML
     public Label p1Nick_lbl, p2Nick_lbl, p3Nick_lbl, p4Nick_lbl;

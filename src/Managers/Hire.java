@@ -28,8 +28,4 @@ public class Hire
     void hireHackers(){
         country.setHackerNumber(country.getHackerNumber() + numOfHackers);
     }
-
-    public int chooseHackerNum(){
-        return numOfHackers;
-    }
 }
