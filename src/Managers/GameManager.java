@@ -25,6 +25,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class GameManager implements Initializable {
     public static Country baseCountry;
@@ -632,16 +633,38 @@ public class GameManager implements Initializable {
     public void cardSelected(MouseEvent e) {
         ImageView clicked = (ImageView) e.getSource();
         put = false;
+        Image lCard = new Image("/Pictures/lCard.jpg");
+        Image wCard = new Image("/Pictures/wCard.jpg");
+        Image gCard = new Image("/Pictures/gCard.jpg");
+        Image bCard = new Image("/Pictures/bCard.jpg");
         if (chosenCard1.getImage() == null) {
             chosenCard1.setImage(clicked.getImage());
             put = true;
+            System.out.println(clicked.getImage().impl_getUrl().equals(gCard.impl_getUrl()));
         } else if (chosenCard2.getImage() == null && !put) {
-            if((chosenCard1.getImage().impl_getUrl().equals("/Pictures/lCard.jpg") && !chosenCard2.getImage().impl_getUrl().equals("/Pictures/lCard.jpg")) ||
-                    (chosenCard1.getImage().impl_getUrl().equals("/Pictures/lCard.jpg") && !chosenCard2.getImage().impl_getUrl().equals("/Pictures/lCard.jpg")) ||)
+            if (chosenCard1.getImage().impl_getUrl().equals(clicked.getImage().impl_getUrl()) || chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) ||
+                    (chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && !clicked.getImage().impl_getUrl().equals(lCard.impl_getUrl())) ||
+                    (chosenCard1.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && clicked.getImage().impl_getUrl().equals(bCard.impl_getUrl())))
                 chosenCard2.setImage(clicked.getImage());
+            else{
+                chosenCard2.setImage(chosenCard1.getImage());
+                chosenCard1.setImage(clicked.getImage());
+            }
             put = true;
         } else if (chosenCard3.getImage() == null && !put) {
-            chosenCard3.setImage(clicked.getImage());
+            if (clicked.getImage().impl_getUrl().equals(bCard.impl_getUrl()) ||
+                    (clicked.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && !chosenCard2.getImage().impl_getUrl().equals(bCard.impl_getUrl())) ||
+                    (clicked.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && (chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) || chosenCard2.getImage().impl_getUrl().equals(lCard.impl_getUrl()))))
+                chosenCard3.setImage(clicked.getImage());
+            else if ((clicked.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && !(chosenCard1.getImage().impl_getUrl().equals(gCard.impl_getUrl()) || chosenCard1.getImage().impl_getUrl().equals(bCard.impl_getUrl())) ||
+                    (clicked.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && !chosenCard1.getImage().impl_getUrl().equals(bCard.impl_getUrl())))) {
+                chosenCard3.setImage(chosenCard2.getImage());
+                chosenCard2.setImage(clicked.getImage());
+            }else{
+                chosenCard3.setImage(chosenCard2.getImage());
+                chosenCard2.setImage(chosenCard1.getImage());
+                chosenCard1.setImage(clicked.getImage());
+            }
             put = true;
         }
     }
@@ -654,20 +677,84 @@ public class GameManager implements Initializable {
         Image bCard = new Image("/Pictures/bCard.jpg");
         System.out.println("BEFORE: " + players.get(turnOwner - 1).getNumOfBonusHackers());
         System.out.println(chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()));
-        if ((chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())) ||
-                (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(lCard.impl_getUrl())))
+        if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())) {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 4);
-        else if ((chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())) ||
-                (chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(wCard.impl_getUrl())))
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
+        }
+        else if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(lCard.impl_getUrl())) {
+            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 4);
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
+        }
+        else if (chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())){
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 6);
-        else if ((chosenCard1.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())) ||
-                (chosenCard1.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())))
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
+        }
+        else if (chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(wCard.impl_getUrl())){
+            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 6);
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
+        }
+        else if (chosenCard1.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())){
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 8);
-        else if ((chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())) ||
-                (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())))
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
+        }
+        else if (chosenCard1.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())){
+            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 8);
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
+        }
+        else if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())){
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 10);
-        else if (chosenCard1.getImage() == bCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == bCard)
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
+        }
+        else if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())){
+            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 10);
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
+        }
+        else if (chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())){
+            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 10);
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
+        }
+        else if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())){
+            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 10);
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
+        }
+        else if (chosenCard1.getImage() == bCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == bCard) {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 12);
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
+        }
+        else {
+            info_lbl.setText("Please enter cards according to the guide.");
+            return;
+        }
+        info_lbl.setText("Bonus hackers successfully added! Returning to the game");
+        setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false, false);
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        cards_pane.setVisible(false);
         System.out.println("LATER: " + players.get(turnOwner - 1).getNumOfBonusHackers());
     }
 }
