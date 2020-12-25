@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchor_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Managers.GameManager">
+<AnchorPane fx:id="anchor_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Managers.GameManager">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -622,7 +631,7 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Pane fx:id="cards_pane" layoutX="191.0" layoutY="85.0" prefHeight="800.0" prefWidth="1500.0" style="-fx-background-color: rgb(0,0,0,0.8); -fx-border-color: white;" visible="false">
+      <Pane fx:id="cards_pane" layoutX="191.0" layoutY="85.0" prefHeight="800.0" prefWidth="1500.0" style="-fx-background-color: rgb(0,0,0,0.8); -fx-border-color: white;">
          <children>
             <HBox fx:id="cards_hbox" layoutY="592.0" prefHeight="208.0" prefWidth="1500.0" style="-fx-background-color: white;">
                <children>
@@ -675,7 +684,7 @@
             <Pane fx:id="selectedCard1_img" layoutX="355.0" layoutY="129.0" prefHeight="330.0" prefWidth="228.0" style="-fx-border-color: white;" />
             <Pane fx:id="selectedCard2_img" layoutX="637.0" layoutY="129.0" prefHeight="330.0" prefWidth="228.0" style="-fx-border-color: white;" />
             <Pane fx:id="selectedCard3_img" layoutX="919.0" layoutY="129.0" prefHeight="330.0" prefWidth="228.0" style="-fx-border-color: white;" />
-            <Button fx:id="combineCards_btn" layoutX="673.0" layoutY="520.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="155.0" style="-fx-background-radius: 30; -fx-border-radius: 30;" text="Combine Cards" onAction="#combineCardsClicked">
+            <Button fx:id="combineCards_btn" layoutX="673.0" layoutY="520.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="155.0" style="-fx-background-radius: 30; -fx-border-radius: 30;" text="Combine Cards">
                <font>
                   <Font size="18.0" />
                </font>

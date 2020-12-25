@@ -177,7 +177,6 @@ public class GameManager implements Initializable {
             item.setOnAction(event);
             hackerNum_menu.getItems().add(item);
             hackerNum_menu.setText("0");
-            return;
         } else {
             for (int i = 1; i <= hackerNum; i++) {
                 if (zero) {
