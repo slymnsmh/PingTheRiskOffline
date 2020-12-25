@@ -27,16 +27,10 @@ public class MainSceneController implements Initializable
     @FXML public Button newGame_btn, settings_btn, credits_btn, howToPlay_btn, exit_btn;
     @FXML public Label info_lbl;
     ArrayList<Player> players;
-    public static MediaPlayer mediaPlayer;
-    public static Media media;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        String path = new File("src/Pictures/Solar.wav").getAbsolutePath();
-        media = new Media(new File(path).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
     }
 
     @FXML

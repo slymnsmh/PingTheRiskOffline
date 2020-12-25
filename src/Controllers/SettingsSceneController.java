@@ -39,11 +39,11 @@ public class SettingsSceneController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         this.readFile();
-        sound_slider.setValue(MainSceneController.mediaPlayer.getVolume() * 100);
+        sound_slider.setValue(Main.mediaPlayer.getVolume() * 100);
         sound_slider.valueProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
-                MainSceneController.mediaPlayer.setVolume(sound_slider.getValue() / 100);
+                Main.mediaPlayer.setVolume(sound_slider.getValue() / 100);
             }
         });
     }

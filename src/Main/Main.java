@@ -9,13 +9,21 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
+
 public class Main extends Application
 {
     public static Stage stage;
+    public static MediaPlayer mediaPlayer;
+    public static Media media;
 
     @Override
     public void start(Stage primaryStage) throws Exception
     {
+        String path = new File("src/Pictures/Solar.wav").getAbsolutePath();
+        media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
         stage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("/Scene/MainScene.fxml"));
         Scene scene = new Scene(root);
