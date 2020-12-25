@@ -179,11 +179,6 @@ public class GameManager implements Initializable {
             }
             first = false;
         }
-
-        for(int i = 0; i < allCountries.size(); i++)
-        {
-
-        }
     }
 
     public void startTurn(int turnType) {
