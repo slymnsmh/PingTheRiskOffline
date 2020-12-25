@@ -27,7 +27,9 @@ public class Attack extends PingManager {
         System.out.println("defender wins " + roll.defenderWins);
         System.out.println("attacker wins " + roll.attackerWins);
         attackersCountry.setHackerNumber(attackerCountry.getHackerNumber() - roll.defenderWins);
+        attacker.setNumOfHackers(attacker.getNumOfHackers() - roll.defenderWins);
         defendersCountry.setHackerNumber(defenderCountry.getHackerNumber() - roll.attackerWins);
+        defender.setNumOfHackers(defender.getNumOfHackers() - roll.attackerWins);
     }
 }
 

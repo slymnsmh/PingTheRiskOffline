@@ -15,8 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.Line;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -27,6 +25,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
+@SuppressWarnings("deprecation")
 public class GameManager implements Initializable {
     public static Country baseCountry;
     public static Country targetCountry;
@@ -45,7 +44,8 @@ public class GameManager implements Initializable {
             num11_lbl, num12_lbl,
             num13_lbl, num14_lbl, num15_lbl, num16_lbl, num17_lbl, num18_lbl, num19_lbl, num20_lbl, num21_lbl,
             num22_lbl, num23_lbl,
-            num24_lbl, num25_lbl, num26_lbl, num27_lbl, num28_lbl, num29_lbl, num30_lbl, num31_lbl, num32_lbl, num33_lbl,
+            num24_lbl, num25_lbl, num26_lbl, num27_lbl, num28_lbl, num29_lbl, num30_lbl, num31_lbl, num32_lbl,
+            num33_lbl,
             num34_lbl, num35_lbl, num36_lbl;
     @FXML
     public Label p1Nick_lbl, p2Nick_lbl, p3Nick_lbl, p4Nick_lbl;
@@ -57,8 +57,6 @@ public class GameManager implements Initializable {
     public HBox cards_hbox;
     @FXML
     public Pane c1_img, c2_img, c3_img, c4_img, c5_img, c6_img, c7_img, c8_img, c9_img, c10_img, c11_img;
-    @FXML
-    public Pane selectedCard1_img, selectedCard2_img, selectedCard3_img;
     @FXML
     public Button combineCards_btn;
     @FXML
@@ -79,7 +77,8 @@ public class GameManager implements Initializable {
     public ImageView chosenCard1, chosenCard2, chosenCard3;
     public int turnOwner = 1;
     public boolean first = true;
-    @FXML public AnchorPane anchor_pane;
+    @FXML
+    public AnchorPane anchor_pane;
     ArrayList<Player> players;
     int playerNumber;
     String[] allColors = {"BLUE", "RED", "GREEN", "ORANGE"};
@@ -120,6 +119,7 @@ public class GameManager implements Initializable {
             baseCountry = null;
             targetCountry = null;
             first = true;
+            updateCardsScene();
         } else {
             endTurn();
         }
@@ -188,7 +188,7 @@ public class GameManager implements Initializable {
                 item.setOnAction(event);
                 hackerNum_menu.getItems().add(item);
             }
-            if(lowerToBigger)
+            if (lowerToBigger)
                 hackerNum_menu.setText(hackerNum_menu.getItems().get(0).getText());
             else
                 hackerNum_menu.setText(hackerNum_menu.getItems().get(hackerNum - 1).getText());
@@ -198,12 +198,13 @@ public class GameManager implements Initializable {
     public void showNicknames() {
         int index = 0;
         for (Player p : players) {
-            HBox hBox = (HBox) nicknames_vbox.getChildren().get(nicknames_vbox.getChildren().size() - players.size() + index);
+            HBox hBox =
+                    (HBox) nicknames_vbox.getChildren().get(nicknames_vbox.getChildren().size() - players.size() + index);
             Label nickname = (Label) hBox.getChildren().get(0);
             nickname.setText(p.getNickname());
             index++;
         }
-        for(int i = 0; i < nicknames_vbox.getChildren().size() - players.size(); i++){
+        for (int i = 0; i < nicknames_vbox.getChildren().size() - players.size(); i++) {
             HBox hBox = (HBox) nicknames_vbox.getChildren().get(i);
             hBox.setVisible(false);
         }
@@ -215,7 +216,8 @@ public class GameManager implements Initializable {
             Label label = (Label) hBox.getChildren().get(0);
             label.setStyle("-fx-border-color: transparent;");
         }
-        HBox hBox = (HBox) nicknames_vbox.getChildren().get(nicknames_vbox.getChildren().size() - players.size() + turnOwner - 1);
+        HBox hBox =
+                (HBox) nicknames_vbox.getChildren().get(nicknames_vbox.getChildren().size() - players.size() + turnOwner - 1);
         Label label = (Label) hBox.getChildren().get(0);
         label.setStyle("-fx-border-color: white;");
     }
@@ -224,16 +226,17 @@ public class GameManager implements Initializable {
         if (turnType == 1) {
             infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Hire");
             disableOtherPlayersCountries(players.get(turnOwner - 1));
-            setHackerNumMenu(0,true, true);
+            setHackerNumMenu(0, true, true);
             hire_btn.setDisable(false);
             hack_btn.setDisable(true);
             fortify_btn.setDisable(true);
             cards_pane.setVisible(false);
             combineCards_btn.setDisable(false);
+            info_lbl.setText("You can combine your cards to get extra hackers.");
         } else if (turnType == 2) {
             infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Hack");
             disableOtherPlayersCountries(players.get(turnOwner - 1));
-            setHackerNumMenu(0,true, true);
+            setHackerNumMenu(0, true, true);
             hire_btn.setDisable(true);
             hack_btn.setDisable(false);
             fortify_btn.setDisable(true);
@@ -243,7 +246,7 @@ public class GameManager implements Initializable {
         } else if (turnType == 3) {
             infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Fortify");
             disableOtherPlayersCountries(players.get(turnOwner - 1));
-            setHackerNumMenu(0,true, true);
+            setHackerNumMenu(0, true, true);
             hire_btn.setDisable(true);
             hack_btn.setDisable(true);
             fortify_btn.setDisable(false);
@@ -307,16 +310,9 @@ public class GameManager implements Initializable {
         }
     }
 
-    public void disableOtherPlayersCountries(Player currentPlayer){
+    public void disableOtherPlayersCountries(Player currentPlayer) {
         disableMap();
-        for(Country c: currentPlayer.getCountries()){
-            map_pane.getChildren().get(c.getId() - 1).setDisable(false);
-        }
-    }
-
-    public void disableCurrentPlayersCountries(Player currentPlayer){
-        enableMap();
-        for(Country c: currentPlayer.getCountries()){
+        for (Country c : currentPlayer.getCountries()) {
             map_pane.getChildren().get(c.getId() - 1).setDisable(false);
         }
     }
@@ -467,17 +463,15 @@ public class GameManager implements Initializable {
         if (turnType == 1) {
             baseCountry = allCountries.get(countryIndex - 1);
         } else if (turnType == 2) {
-            if(allCountries.get(countryIndex - 1).getOwner() == players.get(turnOwner - 1)){
+            if (allCountries.get(countryIndex - 1).getOwner() == players.get(turnOwner - 1)) {
                 baseCountry = allCountries.get(countryIndex - 1);
                 enableMap();
                 setHackerNumMenu(Math.min(baseCountry.getHackerNumber() - 1, 3), false, false);
-            }
-            else {
+            } else {
                 targetCountry = allCountries.get(countryIndex - 1);
             }
         } else {
             if (click % 2 == 0) {
-                targetCountry = null;
                 baseCountry = allCountries.get(countryIndex - 1);
             } else
                 targetCountry = allCountries.get(countryIndex - 1);
@@ -508,7 +502,7 @@ public class GameManager implements Initializable {
         if (baseCountry != null) {
             int cId = baseCountry.getId();
             if (turnType == 1) {
-                for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size(); i++) {
+                for (int i = TOTAL_NUM_OF_COUNTRIES; i < 2 * TOTAL_NUM_OF_COUNTRIES - 1; i++) {
                     Label label = (Label) map_pane.getChildren().get(i);
                     if (label.getId().substring(3, label.getId().indexOf("_")).equals(String.valueOf(cId))) {
                         label.setText(baseCountry.getHackerNumber() + "");
@@ -517,7 +511,7 @@ public class GameManager implements Initializable {
                 }
             } else {
                 int cId2 = targetCountry.getId();
-                for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size(); i++) {
+                for (int i = TOTAL_NUM_OF_COUNTRIES; i < 2 * TOTAL_NUM_OF_COUNTRIES - 1; i++) {
                     Label label = (Label) map_pane.getChildren().get(i);
                     if (label.getId().substring(3, label.getId().indexOf("_")).equals(String.valueOf(cId))) {
                         label.setText(baseCountry.getHackerNumber() + "");
@@ -530,10 +524,11 @@ public class GameManager implements Initializable {
         }
     }
 
-    private void updatePlayerProperties(){
+    private void updatePlayerProperties() {
         int index = 0;
         for (Player p : players) {
-            HBox hBox = (HBox) nicknames_vbox.getChildren().get(nicknames_vbox.getChildren().size() - players.size() + index);
+            HBox hBox =
+                    (HBox) nicknames_vbox.getChildren().get(nicknames_vbox.getChildren().size() - players.size() + index);
             GridPane gridPane = (GridPane) hBox.getChildren().get(1);
             Label hackerLabel = (Label) gridPane.getChildren().get(2);
             Label countryLabel = (Label) gridPane.getChildren().get(3);
@@ -559,7 +554,7 @@ public class GameManager implements Initializable {
             targetCountry.setHackerNumber(targetCountry.getHackerNumber() + Integer.parseInt(hackerNum_menu.getText()));
             hack_btn.setText("HACK");
             nextPhase_btn.setDisable(false);
-            setHackerNumMenu(0,true,true);
+            setHackerNumMenu(0, true, true);
             enableMap();
             updateScene(baseCountry, targetCountry);
             baseCountry = null;
@@ -598,7 +593,7 @@ public class GameManager implements Initializable {
     }
 
     private void updateCardsScene() {
-        for(Node n: cards_hbox.getChildren()){
+        for (Node n : cards_hbox.getChildren()) {
             ImageView imageView = (ImageView) ((Pane) n).getChildren().get(0);
             imageView.setImage(null);
         }
@@ -616,6 +611,9 @@ public class GameManager implements Initializable {
             else if (strategy.getClass() == BlackPoint.class)
                 imageView.setImage(new Image("/Pictures/bCard.jpg"));
         }
+        chosenCard1.setImage(null);
+        chosenCard2.setImage(null);
+        chosenCard3.setImage(null);
     }
 
     public void endGame() {
@@ -629,6 +627,7 @@ public class GameManager implements Initializable {
             imageView.setImage(null);
     }
 
+    @SuppressWarnings("deprecation")
     @FXML
     public void cardSelected(MouseEvent e) {
         ImageView clicked = (ImageView) e.getSource();
@@ -640,13 +639,12 @@ public class GameManager implements Initializable {
         if (chosenCard1.getImage() == null) {
             chosenCard1.setImage(clicked.getImage());
             put = true;
-            System.out.println(clicked.getImage().impl_getUrl().equals(gCard.impl_getUrl()));
         } else if (chosenCard2.getImage() == null && !put) {
             if (chosenCard1.getImage().impl_getUrl().equals(clicked.getImage().impl_getUrl()) || chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) ||
                     (chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && !clicked.getImage().impl_getUrl().equals(lCard.impl_getUrl())) ||
                     (chosenCard1.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && clicked.getImage().impl_getUrl().equals(bCard.impl_getUrl())))
                 chosenCard2.setImage(clicked.getImage());
-            else{
+            else {
                 chosenCard2.setImage(chosenCard1.getImage());
                 chosenCard1.setImage(clicked.getImage());
             }
@@ -660,7 +658,7 @@ public class GameManager implements Initializable {
                     (clicked.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && !chosenCard1.getImage().impl_getUrl().equals(bCard.impl_getUrl())))) {
                 chosenCard3.setImage(chosenCard2.getImage());
                 chosenCard2.setImage(clicked.getImage());
-            }else{
+            } else {
                 chosenCard3.setImage(chosenCard2.getImage());
                 chosenCard2.setImage(chosenCard1.getImage());
                 chosenCard1.setImage(clicked.getImage());
@@ -676,77 +674,99 @@ public class GameManager implements Initializable {
         Image gCard = new Image("/Pictures/gCard.jpg");
         Image bCard = new Image("/Pictures/bCard.jpg");
         System.out.println("BEFORE: " + players.get(turnOwner - 1).getNumOfBonusHackers());
-        System.out.println(chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()));
         if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())) {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 4);
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
-        }
-        else if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(lCard.impl_getUrl())) {
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "BlackPoint"));
+        } else if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(lCard.impl_getUrl())) {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 4);
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
-        }
-        else if (chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())){
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "LamerPoint"));
+        } else if (chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())) {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 6);
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
-        }
-        else if (chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(wCard.impl_getUrl())){
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "BlackPoint"));
+        } else if (chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(wCard.impl_getUrl())) {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 6);
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
-        }
-        else if (chosenCard1.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())){
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "WhitePoint"));
+        } else if (chosenCard1.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())) {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 8);
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
-        }
-        else if (chosenCard1.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())){
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "GrayPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "GrayPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "BlackPoint"));
+        } else if (chosenCard1.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())) {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 8);
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
-        }
-        else if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())){
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "GrayPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "GrayPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "GrayPoint"));
+        } else if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())) {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 10);
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
-        }
-        else if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())){
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "BlackPoint"));
+        } else if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())) {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 10);
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
-        }
-        else if (chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())){
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "GrayPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "BlackPoint"));
+        } else if (chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())) {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 10);
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
-        }
-        else if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())){
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "GrayPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "BlackPoint"));
+        } else if (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())) {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 10);
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("LamerPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("WhitePoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("GrayPoint"));
-        }
-        else if (chosenCard1.getImage() == bCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == bCard) {
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "LamerPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "WhitePoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "GrayPoint"));
+        } else if (chosenCard1.getImage() == bCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == bCard) {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 12);
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
-            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals("BlackPoint"));
-        }
-        else {
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "BlackPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "BlackPoint"));
+            players.get(turnOwner - 1).getCards().removeIf(c -> c.getPointStrategy().getClass().toString().equals(
+                    "BlackPoint"));
+        } else {
             info_lbl.setText("Please enter cards according to the guide.");
             return;
         }
+        updateCardsScene();
         info_lbl.setText("Bonus hackers successfully added! Returning to the game");
         setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false, false);
         try {

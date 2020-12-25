@@ -62,7 +62,7 @@ public class MainSceneController implements Initializable
         }
         else
         {
-            GameScene gameScene = new GameScene(players);
+            GameScene gameScene = GameScene.getInstance(players);
         }
     }
 
