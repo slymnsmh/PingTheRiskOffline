@@ -902,15 +902,15 @@
             </HBox>
             <Pane layoutX="355.0" layoutY="129.0" prefHeight="330.0" prefWidth="228.0" style="-fx-border-color: white;">
                <children>
-                  <ImageView fx:id="chosenCard1" fitHeight="330.0" fitWidth="228.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="chosenCard1" onMouseClicked="#selectedClicked" fitHeight="330.0" fitWidth="228.0" pickOnBounds="true" preserveRatio="true" />
                </children></Pane>
             <Pane layoutX="637.0" layoutY="129.0" prefHeight="330.0" prefWidth="228.0" style="-fx-border-color: white;">
                <children>
-                  <ImageView fx:id="chosenCard2" fitHeight="330.0" fitWidth="228.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="chosenCard2" onMouseClicked="#selectedClicked" fitHeight="330.0" fitWidth="228.0" pickOnBounds="true" preserveRatio="true" />
                </children></Pane>
             <Pane layoutX="919.0" layoutY="129.0" prefHeight="330.0" prefWidth="228.0" style="-fx-border-color: white;">
                <children>
-                  <ImageView fx:id="chosenCard3" fitHeight="330.0" fitWidth="228.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="chosenCard3" onMouseClicked="#selectedClicked" fitHeight="330.0" fitWidth="228.0" pickOnBounds="true" preserveRatio="true" />
                </children></Pane>
             <Button fx:id="combineCards_btn" layoutX="673.0" layoutY="520.0" mnemonicParsing="false" onAction="#combineCardsClicked" prefHeight="54.0" prefWidth="155.0" style="-fx-background-radius: 30; -fx-border-radius: 30;" text="Combine Cards">
                <font>
