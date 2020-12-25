@@ -2,16 +2,32 @@ package StorageRelatedClasses;
 
 public class Card {
     Player owner;
-    int type;
+    PointStrategy pointStrategy;
 
     public Card(Player owner){
         this.owner = owner;
-        type = generateRandomCard();
+        this.pointStrategy = generateRandomPointStrategy();
     }
 
-    public int generateRandomCard()
+    public PointStrategy generateRandomPointStrategy()
     {
-        return (int) ((4.0 * Math.random() + 1));
+        int randomNumber = (int) ((4.0 * Math.random() + 1));
+            if (randomNumber == 1)
+                return new LamerPoint();
+            else if (randomNumber == 2)
+                return new WhitePoint();
+            else if (randomNumber == 3)
+                return new GrayPoint();
+            else
+                return new BlackPoint();
+    }
+
+    public PointStrategy getPointStrategy() {
+        return pointStrategy;
+    }
+
+    public void setPointStrategy(PointStrategy pointStrategy) {
+        this.pointStrategy = pointStrategy;
     }
 
     public Player getOwner() {
@@ -20,13 +36,5 @@ public class Card {
 
     public void setOwner(Player owner) {
         this.owner = owner;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
     }
 }

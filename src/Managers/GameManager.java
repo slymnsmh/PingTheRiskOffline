@@ -1,8 +1,7 @@
 package Managers;
 
 import Scene.GameScene;
-import StorageRelatedClasses.Country;
-import StorageRelatedClasses.Player;
+import StorageRelatedClasses.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,7 +18,6 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Line;
 
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -153,8 +151,9 @@ public class GameManager implements Initializable {
         setCountryColors();
         setCountryHackerNumLabels();
         assignBonusHackers();
+        updatePlayerProperties();
         setPhase();
-        setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false);
+        setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false, false);
     }
 
     public void assignBonusHackers() {
@@ -170,7 +169,7 @@ public class GameManager implements Initializable {
         decidePart(turnType);
     }
 
-    public void setHackerNumMenu(int hackerNum, boolean zero) {
+    public void setHackerNumMenu(int hackerNum, boolean zero, boolean lowerToBigger) {
         hackerNum_menu.getItems().clear();
         if (hackerNum == 0) {
             MenuItem item = new MenuItem("0");
@@ -188,7 +187,10 @@ public class GameManager implements Initializable {
                 item.setOnAction(event);
                 hackerNum_menu.getItems().add(item);
             }
-            hackerNum_menu.setText(hackerNum_menu.getItems().get(hackerNum - 1).getText());
+            if(lowerToBigger)
+                hackerNum_menu.setText(hackerNum_menu.getItems().get(0).getText());
+            else
+                hackerNum_menu.setText(hackerNum_menu.getItems().get(hackerNum - 1).getText());
         }
     }
 
@@ -221,7 +223,7 @@ public class GameManager implements Initializable {
         if (turnType == 1) {
             infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Hire");
             disableOtherPlayersCountries(players.get(turnOwner - 1));
-            setHackerNumMenu(0,true);
+            setHackerNumMenu(0,true, true);
             hire_btn.setDisable(false);
             hack_btn.setDisable(true);
             fortify_btn.setDisable(true);
@@ -230,7 +232,7 @@ public class GameManager implements Initializable {
         } else if (turnType == 2) {
             infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Hack");
             disableOtherPlayersCountries(players.get(turnOwner - 1));
-            setHackerNumMenu(0,true);
+            setHackerNumMenu(0,true, true);
             hire_btn.setDisable(true);
             hack_btn.setDisable(false);
             fortify_btn.setDisable(true);
@@ -240,7 +242,7 @@ public class GameManager implements Initializable {
         } else if (turnType == 3) {
             infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Fortify");
             disableOtherPlayersCountries(players.get(turnOwner - 1));
-            setHackerNumMenu(0,true);
+            setHackerNumMenu(0,true, true);
             hire_btn.setDisable(true);
             hack_btn.setDisable(true);
             fortify_btn.setDisable(false);
@@ -268,7 +270,7 @@ public class GameManager implements Initializable {
                 Hire hire = new Hire(players.get(turnOwner - 1), baseCountry,
                         Integer.parseInt(hackerNum_menu.getText()));
             }
-            setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false);
+            setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false, false);
         }
     }
 
@@ -277,15 +279,17 @@ public class GameManager implements Initializable {
         int win = attacker.getNumOfWins();
         Hack hack = new Hack(baseCountry, targetCountry, Integer.parseInt(hackerNum_menu.getText()), first);
         updateScene(baseCountry, targetCountry);
+        updatePlayerProperties();
         if (win != attacker.getNumOfWins()) {
             setCountryColors();
             infoGame_lbl.setText("Choose number of hackers to move to gained country!");
-            setHackerNumMenu(baseCountry.getHackerNumber() - 1, true);
+            setHackerNumMenu(baseCountry.getHackerNumber() - 1, true, true);
             hack_btn.setText("MOVE");
+            nextPhase_btn.setDisable(true);
             first = false;
         } else {
             enableMap();
-            setHackerNumMenu(Math.min(baseCountry.getHackerNumber() - 1, 3), false);
+            setHackerNumMenu(Math.min(baseCountry.getHackerNumber() - 1, 3), false, false);
         }
         updateCardsScene();
     }
@@ -340,7 +344,7 @@ public class GameManager implements Initializable {
             baseCountry = null;
             targetCountry = null;
             assignBonusHackers();
-            setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false);
+            setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false, false);
             startTurn(turnType);
         } else {
             endGame();
@@ -465,7 +469,7 @@ public class GameManager implements Initializable {
             if(allCountries.get(countryIndex - 1).getOwner() == players.get(turnOwner - 1)){
                 baseCountry = allCountries.get(countryIndex - 1);
                 enableMap();
-                setHackerNumMenu(Math.min(baseCountry.getHackerNumber() - 1, 3), false);
+                setHackerNumMenu(Math.min(baseCountry.getHackerNumber() - 1, 3), false, false);
             }
             else {
                 targetCountry = allCountries.get(countryIndex - 1);
@@ -478,7 +482,7 @@ public class GameManager implements Initializable {
                 targetCountry = allCountries.get(countryIndex - 1);
             click++;
             if (baseCountry != null)
-                setHackerNumMenu(baseCountry.getHackerNumber() - 1, false);
+                setHackerNumMenu(baseCountry.getHackerNumber() - 1, false, false);
             else
                 hackerNum_menu.setText("0");
         }
@@ -491,9 +495,10 @@ public class GameManager implements Initializable {
         } else {
             startTurn(turnType);
             updateScene(baseCountry, null);
+            updatePlayerProperties();
             if (players.get(turnOwner - 1).getNumOfBonusHackers() == 0) {
                 infoGame_lbl.setText("No hackers left to hire. Go to hack phase!");
-                setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false);
+                setHackerNumMenu(players.get(turnOwner - 1).getNumOfBonusHackers(), false, false);
             }
         }
     }
@@ -524,6 +529,19 @@ public class GameManager implements Initializable {
         }
     }
 
+    private void updatePlayerProperties(){
+        int index = 0;
+        for (Player p : players) {
+            HBox hBox = (HBox) nicknames_vbox.getChildren().get(nicknames_vbox.getChildren().size() - players.size() + index);
+            GridPane gridPane = (GridPane) hBox.getChildren().get(1);
+            Label hackerLabel = (Label) gridPane.getChildren().get(2);
+            Label countryLabel = (Label) gridPane.getChildren().get(3);
+            hackerLabel.setText(p.getNumOfHackers() + "");
+            countryLabel.setText(p.getCountries().size() + "");
+            index++;
+        }
+    }
+
     @FXML
     public void hackClicked() {
         if (hack_btn.getText().equals("HACK")) {
@@ -539,6 +557,8 @@ public class GameManager implements Initializable {
             baseCountry.setHackerNumber(baseCountry.getHackerNumber() - Integer.parseInt(hackerNum_menu.getText()));
             targetCountry.setHackerNumber(targetCountry.getHackerNumber() + Integer.parseInt(hackerNum_menu.getText()));
             hack_btn.setText("HACK");
+            nextPhase_btn.setDisable(false);
+            setHackerNumMenu(0,true,true);
             enableMap();
             updateScene(baseCountry, targetCountry);
             baseCountry = null;
@@ -585,14 +605,14 @@ public class GameManager implements Initializable {
         for (int i = 0; i < currentPlayer.getCards().size(); i++) {
             Pane pane = (Pane) cards_hbox.getChildren().get(i);
             ImageView imageView = (ImageView) pane.getChildren().get(0);
-            int cardType = currentPlayer.getCards().get(i).getType();
-            if (cardType == 1)
+            PointStrategy strategy = currentPlayer.getCards().get(i).getPointStrategy();
+            if (strategy.getClass() == LamerPoint.class)
                 imageView.setImage(new Image("/Pictures/lCard.jpg"));
-            else if (cardType == 2)
+            else if (strategy.getClass() == WhitePoint.class)
                 imageView.setImage(new Image("/Pictures/wCard.jpg"));
-            else if (cardType == 3)
+            else if (strategy.getClass() == GrayPoint.class)
                 imageView.setImage(new Image("/Pictures/gCard.jpg"));
-            else if (cardType == 4)
+            else if (strategy.getClass() == BlackPoint.class)
                 imageView.setImage(new Image("/Pictures/bCard.jpg"));
         }
     }
@@ -636,23 +656,17 @@ public class GameManager implements Initializable {
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 5);
         else if (chosenCard1.getImage() == bCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == bCard)
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 7);
-        else if (chosenCard1.getImage() == lCard && chosenCard2.getImage() == gCard && chosenCard3.getImage() == bCard)
+        else if ((chosenCard1.getImage() == lCard && chosenCard2.getImage() == gCard && chosenCard3.getImage() == bCard) ||
+                (chosenCard1.getImage() == lCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == gCard) ||
+                (chosenCard1.getImage() == lCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == gCard) ||
+                (chosenCard1.getImage() == bCard && chosenCard2.getImage() == lCard && chosenCard3.getImage() == gCard) ||
+                (chosenCard1.getImage() == bCard && chosenCard2.getImage() == gCard && chosenCard3.getImage() == lCard) ||
+                (chosenCard1.getImage() == gCard && chosenCard2.getImage() == lCard && chosenCard3.getImage() == bCard) ||
+                (chosenCard1.getImage() == gCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == lCard))
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 9);
-        else if (chosenCard1.getImage() == lCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == gCard)
-            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 9);
-        else if (chosenCard1.getImage() == bCard && chosenCard2.getImage() == lCard && chosenCard3.getImage() == gCard)
-            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 9);
-        else if (chosenCard1.getImage() == bCard && chosenCard2.getImage() == gCard && chosenCard3.getImage() == lCard)
-            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 9);
-        else if (chosenCard1.getImage() == gCard && chosenCard2.getImage() == lCard && chosenCard3.getImage() == bCard)
-            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 9);
-        else if (chosenCard1.getImage() == gCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == lCard)
-            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 9);
-        else if (chosenCard1.getImage() == lCard && chosenCard2.getImage() == lCard && chosenCard3.getImage() == bCard)
-            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 11);
-        else if (chosenCard1.getImage() == gCard && chosenCard2.getImage() == gCard && chosenCard3.getImage() == bCard)
-            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 11);
-        else if (chosenCard1.getImage() == wCard && chosenCard2.getImage() == wCard && chosenCard3.getImage() == bCard)
+        else if ((chosenCard1.getImage() == lCard && chosenCard2.getImage() == lCard && chosenCard3.getImage() == bCard) ||
+                (chosenCard1.getImage() == gCard && chosenCard2.getImage() == gCard && chosenCard3.getImage() == bCard) ||
+                (chosenCard1.getImage() == wCard && chosenCard2.getImage() == wCard && chosenCard3.getImage() == bCard))
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 11);
         else if (chosenCard1.getImage() == bCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == bCard)
             players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 13);
