@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -119,6 +120,7 @@ public class GameManager implements Initializable {
             setPhase();
             baseCountry = null;
             targetCountry = null;
+            first = true;
         } else {
             endTurn();
         }
@@ -165,7 +167,6 @@ public class GameManager implements Initializable {
     }
 
     public void startTurn(int turnType) {
-        assignBonusHackers();
         decidePart(turnType);
     }
 
@@ -195,12 +196,12 @@ public class GameManager implements Initializable {
     public void showNicknames() {
         int index = 0;
         for (Player p : players) {
-            HBox hBox = (HBox) nicknames_vbox.getChildren().get(index);
+            HBox hBox = (HBox) nicknames_vbox.getChildren().get(nicknames_vbox.getChildren().size() - players.size() + index);
             Label nickname = (Label) hBox.getChildren().get(0);
             nickname.setText(p.getNickname());
             index++;
         }
-        for(int i = index; i < nicknames_vbox.getChildren().size(); i++){
+        for(int i = 0; i < nicknames_vbox.getChildren().size() - players.size(); i++){
             HBox hBox = (HBox) nicknames_vbox.getChildren().get(i);
             hBox.setVisible(false);
         }
@@ -212,7 +213,7 @@ public class GameManager implements Initializable {
             Label label = (Label) hBox.getChildren().get(0);
             label.setStyle("-fx-border-color: transparent;");
         }
-        HBox hBox = (HBox) nicknames_vbox.getChildren().get(turnOwner - 1);
+        HBox hBox = (HBox) nicknames_vbox.getChildren().get(nicknames_vbox.getChildren().size() - players.size() + turnOwner - 1);
         Label label = (Label) hBox.getChildren().get(0);
         label.setStyle("-fx-border-color: white;");
     }
@@ -226,6 +227,7 @@ public class GameManager implements Initializable {
             hack_btn.setDisable(true);
             fortify_btn.setDisable(true);
             cards_pane.setVisible(false);
+            combineCards_btn.setDisable(false);
         } else if (turnType == 2) {
             infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Hack");
             disableOtherPlayersCountries(players.get(turnOwner - 1));
@@ -234,6 +236,8 @@ public class GameManager implements Initializable {
             hack_btn.setDisable(false);
             fortify_btn.setDisable(true);
             cards_pane.setVisible(false);
+            combineCards_btn.setDisable(true);
+            info_lbl.setText("You can combine cards only in Hire Phase.");
         } else if (turnType == 3) {
             infoGame_lbl.setText("Player \"" + players.get(turnOwner - 1).getNickname() + "\" -> Part: " + "Fortify");
             disableOtherPlayersCountries(players.get(turnOwner - 1));
@@ -242,6 +246,8 @@ public class GameManager implements Initializable {
             hack_btn.setDisable(true);
             fortify_btn.setDisable(false);
             cards_pane.setVisible(false);
+            combineCards_btn.setDisable(false);
+            info_lbl.setText("You can combine cards only in Hire Phase.");
             nextPhase_btn.setText("END TURN");
         }
     }
@@ -270,16 +276,17 @@ public class GameManager implements Initializable {
     public void startHack() {
         Player attacker = players.get(turnOwner - 1);
         int win = attacker.getNumOfWins();
-        Hack hack = new Hack(baseCountry, targetCountry, Integer.parseInt(hackerNum_menu.getText()));
+        Hack hack = new Hack(baseCountry, targetCountry, Integer.parseInt(hackerNum_menu.getText()), first);
         updateScene(baseCountry, targetCountry);
         if (win != attacker.getNumOfWins()) {
             setCountryColors();
             infoGame_lbl.setText("Choose number of hackers to move to gained country!");
             setHackerNumMenu(baseCountry.getHackerNumber() - 1, true);
             hack_btn.setText("MOVE");
+            first = false;
         } else {
             enableMap();
-            setHackerNumMenu(0,true);
+            setHackerNumMenu(Math.min(baseCountry.getHackerNumber() - 1, 3), false);
         }
         updateCardsScene();
     }
@@ -325,6 +332,7 @@ public class GameManager implements Initializable {
             if (players.size() == turnOwner)
                 turnOwner = 0;
             turnOwner++;
+            updateCardsScene();
             turnType = 1;
             first = true;
             showTurnOwner();
@@ -570,6 +578,10 @@ public class GameManager implements Initializable {
     }
 
     private void updateCardsScene() {
+        for(Node n: cards_hbox.getChildren()){
+            ImageView imageView = (ImageView) ((Pane) n).getChildren().get(0);
+            imageView.setImage(null);
+        }
         Player currentPlayer = players.get(turnOwner - 1);
         for (int i = 0; i < currentPlayer.getCards().size(); i++) {
             Pane pane = (Pane) cards_hbox.getChildren().get(i);

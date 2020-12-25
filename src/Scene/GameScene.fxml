@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anchor_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Managers.GameManager">
+<AnchorPane fx:id="anchor_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Managers.GameManager">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -626,23 +626,56 @@
          <children>
             <HBox fx:id="cards_hbox" layoutY="592.0" prefHeight="208.0" prefWidth="1500.0" style="-fx-background-color: white;">
                <children>
-                  <Pane fx:id="c1_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;" />
-                  <Pane fx:id="c2_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;" />
-                  <Pane fx:id="c3_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;" />
-                  <Pane fx:id="c4_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;" />
-                  <Pane fx:id="c5_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;" />
-                  <Pane fx:id="c6_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;" />
-                  <Pane fx:id="c7_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;" />
-                  <Pane fx:id="c8_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;" />
-                  <Pane fx:id="c9_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;" />
-                  <Pane fx:id="c10_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;" />
-                  <Pane fx:id="c11_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;" />
+                  <Pane fx:id="c1_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;">
+                     <children>
+                        <ImageView fitHeight="208.0" fitWidth="136.0" onMouseClicked="#cardSelected" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane fx:id="c2_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;">
+                     <children>
+                        <ImageView fitHeight="208.0" fitWidth="137.0" onMouseClicked="#cardSelected" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane fx:id="c3_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;">
+                     <children>
+                        <ImageView fitHeight="208.0" fitWidth="137.0" onMouseClicked="#cardSelected" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane fx:id="c4_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;">
+                     <children>
+                        <ImageView fitHeight="208.0" fitWidth="137.0" onMouseClicked="#cardSelected" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane fx:id="c5_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;">
+                     <children>
+                        <ImageView fitHeight="208.0" fitWidth="137.0" onMouseClicked="#cardSelected" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane fx:id="c6_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;">
+                     <children>
+                        <ImageView fitHeight="208.0" fitWidth="137.0" onMouseClicked="#cardSelected" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane fx:id="c7_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;">
+                     <children>
+                        <ImageView fitHeight="208.0" fitWidth="137.0" onMouseClicked="#cardSelected" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane fx:id="c8_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;">
+                     <children>
+                        <ImageView fitHeight="208.0" fitWidth="137.0" onMouseClicked="#cardSelected" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane fx:id="c9_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;">
+                     <children>
+                        <ImageView fitHeight="208.0" fitWidth="137.0" onMouseClicked="#cardSelected" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane fx:id="c10_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;">
+                     <children>
+                        <ImageView fitHeight="208.0" fitWidth="137.0" onMouseClicked="#cardSelected" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
+                  <Pane fx:id="c11_img" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: black; -fx-border-color: white;">
+                     <children>
+                        <ImageView fitHeight="208.0" fitWidth="137.0" onMouseClicked="#cardSelected" pickOnBounds="true" preserveRatio="true" />
+                     </children></Pane>
                </children>
             </HBox>
             <Pane fx:id="selectedCard1_img" layoutX="355.0" layoutY="129.0" prefHeight="330.0" prefWidth="228.0" style="-fx-border-color: white;" />
             <Pane fx:id="selectedCard2_img" layoutX="637.0" layoutY="129.0" prefHeight="330.0" prefWidth="228.0" style="-fx-border-color: white;" />
             <Pane fx:id="selectedCard3_img" layoutX="919.0" layoutY="129.0" prefHeight="330.0" prefWidth="228.0" style="-fx-border-color: white;" />
-            <Button fx:id="combineCards_btn" layoutX="673.0" layoutY="520.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="155.0" style="-fx-background-radius: 30; -fx-border-radius: 30;" text="Combine Cards">
+            <Button fx:id="combineCards_btn" layoutX="673.0" layoutY="520.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="155.0" style="-fx-background-radius: 30; -fx-border-radius: 30;" text="Combine Cards" onAction="#combineCardsClicked">
                <font>
                   <Font size="18.0" />
                </font>

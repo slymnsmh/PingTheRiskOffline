@@ -10,12 +10,14 @@ public class Hack {
     static int distance;
     Country baseCountry;
     Country targetCountry;
+    boolean isFirst;
     int numOfAttacker;
 
-    public Hack(Country baseCountry, Country targetCountry, int numOfAttacker) {
+    public Hack(Country baseCountry, Country targetCountry, int numOfAttacker, boolean isFirst) {
         this.baseCountry = baseCountry;
         this.targetCountry = targetCountry;
         this.numOfAttacker = numOfAttacker;
+        this.isFirst = isFirst;
         calculateDistance();
         startAttack();
     }
@@ -38,7 +40,8 @@ public class Hack {
             targetCountry.setHackerNumber(1);
             baseCountry.setHackerNumber(baseCountry.getHackerNumber() - 1);
             baseCountry.getOwner().setNumOfWins(baseCountry.getOwner().getNumOfWins() + 1);
-            giveCard();
+            if(isFirst)
+                giveCard();
         }
     }
 
