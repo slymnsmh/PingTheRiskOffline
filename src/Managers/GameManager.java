@@ -18,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Line;
 
+import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -194,18 +195,25 @@ public class GameManager implements Initializable {
     public void showNicknames() {
         int index = 0;
         for (Player p : players) {
-            Label nickname = (Label) nicknames_vbox.getChildren().get(index);
+            HBox hBox = (HBox) nicknames_vbox.getChildren().get(index);
+            Label nickname = (Label) hBox.getChildren().get(0);
             nickname.setText(p.getNickname());
             index++;
+        }
+        for(int i = index; i < nicknames_vbox.getChildren().size(); i++){
+            HBox hBox = (HBox) nicknames_vbox.getChildren().get(i);
+            hBox.setVisible(false);
         }
     }
 
     public void showTurnOwner() {
         for (int i = 0; i < nicknames_vbox.getChildren().size(); i++) {
-            Label label = (Label) nicknames_vbox.getChildren().get(i);
+            HBox hBox = (HBox) nicknames_vbox.getChildren().get(i);
+            Label label = (Label) hBox.getChildren().get(0);
             label.setStyle("-fx-border-color: transparent;");
         }
-        Label label = (Label) nicknames_vbox.getChildren().get(turnOwner - 1);
+        HBox hBox = (HBox) nicknames_vbox.getChildren().get(turnOwner - 1);
+        Label label = (Label) hBox.getChildren().get(0);
         label.setStyle("-fx-border-color: white;");
     }
 

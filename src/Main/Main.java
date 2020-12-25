@@ -20,10 +20,10 @@ public class Main extends Application
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        String path = new File("src/Pictures/Solar.wav").getAbsolutePath();
-        media = new Media(new File(path).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
+//        String path = new File("src/Pictures/Solar.wav").getAbsolutePath();
+//        media = new Media(new File(path).toURI().toString());
+//        mediaPlayer = new MediaPlayer(media);
+//        mediaPlayer.play();
         stage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("/Scene/MainScene.fxml"));
         Scene scene = new Scene(root);
