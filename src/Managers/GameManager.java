@@ -52,7 +52,9 @@ public class GameManager implements Initializable {
     @FXML
     public Pane settings_pane;
     @FXML
-    public HBox dice_pane;
+    public VBox attackerDice_vbox;
+    @FXML
+    public VBox defenderDice_vbox;
     @FXML
     public VBox nicknames_vbox;
     @FXML
@@ -391,7 +393,7 @@ public class GameManager implements Initializable {
     }
 
     public void setCountryHackerNumLabels() {
-        for (int i = TOTAL_NUM_OF_COUNTRIES; i < 2 * TOTAL_NUM_OF_COUNTRIES - 1; i++) {
+        for (int i = TOTAL_NUM_OF_COUNTRIES; i < 2 * TOTAL_NUM_OF_COUNTRIES; i++) {
             Label label = (Label) map_pane.getChildren().get(i);
             label.setText(allCountries.get(i - TOTAL_NUM_OF_COUNTRIES).getHackerNumber() + "");
         }
@@ -513,7 +515,7 @@ public class GameManager implements Initializable {
         if (baseCountry != null) {
             int cId = baseCountry.getId();
             if (turnType == 1) {
-                for (int i = TOTAL_NUM_OF_COUNTRIES; i < 2 * TOTAL_NUM_OF_COUNTRIES - 1; i++) {
+                for (int i = TOTAL_NUM_OF_COUNTRIES; i < 2 * TOTAL_NUM_OF_COUNTRIES; i++) {
                     Label label = (Label) map_pane.getChildren().get(i);
                     if (label.getId().substring(3, label.getId().indexOf("_")).equals(String.valueOf(cId))) {
                         label.setText(baseCountry.getHackerNumber() + "");
@@ -522,7 +524,7 @@ public class GameManager implements Initializable {
                 }
             } else {
                 int cId2 = targetCountry.getId();
-                for (int i = TOTAL_NUM_OF_COUNTRIES; i < 2 * TOTAL_NUM_OF_COUNTRIES - 1; i++) {
+                for (int i = TOTAL_NUM_OF_COUNTRIES; i < 2 * TOTAL_NUM_OF_COUNTRIES; i++) {
                     Label label = (Label) map_pane.getChildren().get(i);
                     if (label.getId().substring(3, label.getId().indexOf("_")).equals(String.valueOf(cId))) {
                         label.setText(baseCountry.getHackerNumber() + "");
@@ -590,19 +592,23 @@ public class GameManager implements Initializable {
     }
 
     public void showDice(Hack hack){
-        for(Node n: dice_pane.getChildren()){
+        for(Node n: attackerDice_vbox.getChildren()){
+            ImageView imageView = (ImageView) n;
+            imageView.setImage(null);
+        }
+        for(Node n: defenderDice_vbox.getChildren()){
             ImageView imageView = (ImageView) n;
             imageView.setImage(null);
         }
         for(int i = 0; i < hack.attack.roll.attackersScores.size(); i++)
         {
-            ImageView image = (ImageView) dice_pane.getChildren().get(i);
+            ImageView image = (ImageView) attackerDice_vbox.getChildren().get(i);
             image.setImage(new Image("/Pictures/Dice-" + hack.attack.roll.attackersScores.get(i) + ".png"));
             System.out.println("attacker dice " + hack.attack.roll.attackersScores.get(i));
         }
         for(int i = 0; i < hack.attack.roll.defendersScores.size(); i++)
         {
-            ImageView image = (ImageView) dice_pane.getChildren().get(i + 3);
+            ImageView image = (ImageView) defenderDice_vbox.getChildren().get(i);
             image.setImage(new Image("/Pictures/Dice-" + hack.attack.roll.defendersScores.get(i) + ".png"));
             System.out.println("defender dice " + hack.attack.roll.defendersScores.get(i));
         }
