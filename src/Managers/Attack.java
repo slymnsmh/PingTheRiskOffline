@@ -24,8 +24,6 @@ public class Attack extends PingManager {
                 pingManager.pingLevel);
         roll.compareBiggest(numOfAttackerHackers, Math.min(defenderCountry.getHackerNumber(), 2));
 
-        System.out.println("defender wins " + roll.defenderWins);
-        System.out.println("attacker wins " + roll.attackerWins);
         attackersCountry.setHackerNumber(attackerCountry.getHackerNumber() - roll.defenderWins);
         attacker.setNumOfHackers(attacker.getNumOfHackers() - roll.defenderWins);
         defendersCountry.setHackerNumber(defenderCountry.getHackerNumber() - roll.attackerWins);

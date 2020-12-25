@@ -50,7 +50,9 @@ public class GameManager implements Initializable {
     @FXML
     public Label p1Nick_lbl, p2Nick_lbl, p3Nick_lbl, p4Nick_lbl;
     @FXML
-    public GridPane settings_grid;
+    public Pane settings_pane;
+    @FXML
+    public HBox dice_pane;
     @FXML
     public VBox nicknames_vbox;
     @FXML
@@ -63,6 +65,8 @@ public class GameManager implements Initializable {
     public Label info_lbl;
     @FXML
     public Pane cards_pane;
+    @FXML
+    public Pane howToPlay_pane;
     @FXML
     public Button hire_btn, hack_btn, fortify_btn;
     @FXML
@@ -160,7 +164,7 @@ public class GameManager implements Initializable {
     public void assignBonusHackers() {
         if (first) {
             for (Player p : players) {
-                p.setNumOfBonusHackers(3);
+                p.setNumOfBonusHackers(40);
             }
             first = false;
         }
@@ -282,6 +286,7 @@ public class GameManager implements Initializable {
         Player attacker = players.get(turnOwner - 1);
         int win = attacker.getNumOfWins();
         Hack hack = new Hack(baseCountry, targetCountry, Integer.parseInt(hackerNum_menu.getText()), first);
+        showDice(hack);
         updateScene(baseCountry, targetCountry);
         updatePlayerProperties();
         if (win != attacker.getNumOfWins()) {
@@ -322,6 +327,12 @@ public class GameManager implements Initializable {
     }
 
     public void endTurn() {
+        for(int i = 0; i < players.size(); i++){
+            if (players.get(i).getCountries().size() == 0) {
+                players.remove(players.get(i));
+                showNicknames();
+            }
+        }
         for (Player p : players) {
             if (p.getCountries().size() == 0) {
                 players.remove(p);
@@ -380,7 +391,7 @@ public class GameManager implements Initializable {
     }
 
     public void setCountryHackerNumLabels() {
-        for (int i = TOTAL_NUM_OF_COUNTRIES; i < map_pane.getChildren().size(); i++) {
+        for (int i = TOTAL_NUM_OF_COUNTRIES; i < 2 * TOTAL_NUM_OF_COUNTRIES - 1; i++) {
             Label label = (Label) map_pane.getChildren().get(i);
             label.setText(allCountries.get(i - TOTAL_NUM_OF_COUNTRIES).getHackerNumber() + "");
         }
@@ -578,13 +589,33 @@ public class GameManager implements Initializable {
         }
     }
 
-    @FXML
-    public void howToPlayClicked() {
+    public void showDice(Hack hack){
+        for(Node n: dice_pane.getChildren()){
+            ImageView imageView = (ImageView) n;
+            imageView.setImage(null);
+        }
+        for(int i = 0; i < hack.attack.roll.attackersScores.size(); i++)
+        {
+            ImageView image = (ImageView) dice_pane.getChildren().get(i);
+            image.setImage(new Image("/Pictures/Dice-" + hack.attack.roll.attackersScores.get(i) + ".png"));
+            System.out.println("attacker dice " + hack.attack.roll.attackersScores.get(i));
+        }
+        for(int i = 0; i < hack.attack.roll.defendersScores.size(); i++)
+        {
+            ImageView image = (ImageView) dice_pane.getChildren().get(i + 3);
+            image.setImage(new Image("/Pictures/Dice-" + hack.attack.roll.defendersScores.get(i) + ".png"));
+            System.out.println("defender dice " + hack.attack.roll.defendersScores.get(i));
+        }
     }
 
     @FXML
-    public void settingsClicked(MouseEvent e) {
-        settings_grid.setVisible(!settings_grid.isVisible());
+    public void howToPlayClicked() {
+        howToPlay_pane.setVisible(!howToPlay_pane.isVisible());
+    }
+
+    @FXML
+    public void settingsClicked() {
+        settings_pane.setVisible(!settings_pane.isVisible());
     }
 
     @FXML
@@ -617,7 +648,7 @@ public class GameManager implements Initializable {
     }
 
     public void endGame() {
-        infoGame_lbl.setText("WINNER IS: " + players.get(0) + " !!!!");
+        infoGame_lbl.setText("WINNER IS: " + players.get(0).getNickname() + " !!!!");
     }
 
     @FXML

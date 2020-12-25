@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitMenuButton?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anchor_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Managers.GameManager">
+<AnchorPane fx:id="anchor_pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Managers.GameManager">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -601,13 +592,183 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Label>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="426.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="270.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="375.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="113.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="289.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="434.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="297.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="373.0" layoutY="448.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="301.0" layoutY="509.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="475.0" layoutY="613.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="454.0" layoutY="699.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="522.0" layoutY="691.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="711.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="1173.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="855.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="999.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="1137.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="1256.0" layoutY="297.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="1457.0" layoutY="249.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="804.0" layoutY="386.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="922.0" layoutY="446.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="980.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="1063.0" layoutY="386.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="1092.0" layoutY="466.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="1170.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="1253.0" layoutY="428.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="733.0" layoutY="494.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="833.0" layoutY="506.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="744.0" layoutY="572.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="934.0" layoutY="570.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="851.0" layoutY="654.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="597.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="562.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="90.0" fitWidth="104.0" layoutX="1359.0" layoutY="742.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../Pictures/loc.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
       <VBox fx:id="nicknames_vbox" layoutX="42.0" layoutY="727.0" prefHeight="316.0" prefWidth="417.0" spacing="40.0">
          <children>
             <HBox fx:id="p1_hbox" prefHeight="59.0" prefWidth="418.0" spacing="20.0">
                <children>
-                  <Label fx:id="p1Nick_lbl" style="-fx-background-color: transparent;" text="-" textFill="WHITE">
+                  <Label fx:id="p1Nick_lbl" style="-fx-background-color: transparent;" text="-" textFill="#44c7ff">
                      <font>
                         <Font size="30.0" />
                      </font>
@@ -651,7 +812,7 @@
             </HBox>
             <HBox fx:id="p2_hbox" prefHeight="59.0" prefWidth="418.0" spacing="20.0">
                <children>
-                  <Label fx:id="p2Nick_lbl" style="-fx-background-color: transparent;" text="-" textFill="WHITE">
+                  <Label fx:id="p2Nick_lbl" style="-fx-background-color: transparent;" text="-" textFill="#ff6969">
                      <font>
                         <Font size="30.0" />
                      </font>
@@ -695,7 +856,7 @@
             </HBox>
             <HBox fx:id="p3_hbox" prefHeight="59.0" prefWidth="418.0" spacing="20.0">
                <children>
-                  <Label fx:id="p3Nick_lbl" style="-fx-background-color: transparent;" text="-" textFill="WHITE">
+                  <Label fx:id="p3Nick_lbl" style="-fx-background-color: transparent;" text="-" textFill="#52ff69">
                      <font>
                         <Font size="30.0" />
                      </font>
@@ -739,7 +900,7 @@
             </HBox>
             <HBox fx:id="p4_hbox" prefHeight="59.0" prefWidth="418.0" spacing="20.0">
                <children>
-                  <Label fx:id="p4Nick_lbl" style="-fx-background-color: transparent;" text="-" textFill="WHITE">
+                  <Label fx:id="p4Nick_lbl" style="-fx-background-color: transparent;" text="-" textFill="#ffc744">
                      <font>
                         <Font size="30.0" />
                      </font>
@@ -840,7 +1001,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Button fx:id="howToPlay_btn" layoutX="1789.0" layoutY="28.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" style="-fx-background-radius: 50; -fx-border-radius: 50;" text="HOW TO PLAY" textAlignment="CENTER" wrapText="true">
+      <Button fx:id="howToPlay_btn" layoutX="1669.0" layoutY="47.0" mnemonicParsing="false" onAction="#howToPlayClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-radius: 50; -fx-border-radius: 50;" text="HOW TO PLAY" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
@@ -902,15 +1063,15 @@
             </HBox>
             <Pane layoutX="355.0" layoutY="129.0" prefHeight="330.0" prefWidth="228.0" style="-fx-border-color: white;">
                <children>
-                  <ImageView fx:id="chosenCard1" onMouseClicked="#selectedClicked" fitHeight="330.0" fitWidth="228.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="chosenCard1" fitHeight="330.0" fitWidth="228.0" onMouseClicked="#selectedClicked" pickOnBounds="true" preserveRatio="true" />
                </children></Pane>
             <Pane layoutX="637.0" layoutY="129.0" prefHeight="330.0" prefWidth="228.0" style="-fx-border-color: white;">
                <children>
-                  <ImageView fx:id="chosenCard2" onMouseClicked="#selectedClicked" fitHeight="330.0" fitWidth="228.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="chosenCard2" fitHeight="330.0" fitWidth="228.0" onMouseClicked="#selectedClicked" pickOnBounds="true" preserveRatio="true" />
                </children></Pane>
             <Pane layoutX="919.0" layoutY="129.0" prefHeight="330.0" prefWidth="228.0" style="-fx-border-color: white;">
                <children>
-                  <ImageView fx:id="chosenCard3" onMouseClicked="#selectedClicked" fitHeight="330.0" fitWidth="228.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="chosenCard3" fitHeight="330.0" fitWidth="228.0" onMouseClicked="#selectedClicked" pickOnBounds="true" preserveRatio="true" />
                </children></Pane>
             <Button fx:id="combineCards_btn" layoutX="673.0" layoutY="520.0" mnemonicParsing="false" onAction="#combineCardsClicked" prefHeight="54.0" prefWidth="155.0" style="-fx-background-radius: 30; -fx-border-radius: 30;" text="Combine Cards">
                <font>
@@ -924,5 +1085,39 @@
             </Label>
          </children>
       </Pane>
+      <Pane fx:id="howToPlay_pane" layoutX="98.0" layoutY="48.0" opacity="0.8" prefHeight="946.0" prefWidth="1566.0" style="-fx-background-color: BLACK; -fx-border-color: white;" visible="false">
+         <children>
+            <Text fill="WHITE" layoutX="32.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="After entering 2-4 player names at the start menu you can start the game by clicking New Game. At the start of the game each player willhave the same amount of resources which are 36 countries and 30 hackers divided into the player number and distributed randomly. Also, each player gains 3 hackers to hire at the beginning of their games. The beginning of each turn starts with the Hire part in which the player is supposed to use any cards they have and hire their free hackers by clicking on one of their countries and selecting the amount of hackers and pressing hire. The player can skip Hire part by clicking Next Phase. After skippping Hire part the player goes into Hack part in which the player is supposed to click one of his country to attack from and then select an enemy country to attack to. The distance between these countries applies a penalty in which 5 is the maximum and 1 is the minimum. If the player wins dice rolls and conqueres the country, he/she gains a card to be used in a later turn. The player can skip this part by clicking Next Phase.  The next and last part is the Fortify part in which the player is supposed to select two of his countries, first to take hackers from and second to reinforce hackers to. After selecting the countries, the player should select the amount of hackers and press Fortify. If the player presses Next Phase at this part,his turn ends and the next player's turn begins. When a player has no countries left he loses and when a player has all the countries he wins." wrappingWidth="1515.1996536254883">
+               <font>
+                  <Font size="37.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <HBox fx:id="dice_pane" layoutX="597.0" layoutY="903.0" prefHeight="80.0" prefWidth="720.0" spacing="60.0">
+         <children>
+            <ImageView fitHeight="70.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="70.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="70.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="70.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="70.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="70.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </HBox>
+      <Pane fx:id="settings_pane" layoutX="1353.0" layoutY="128.0" prefHeight="110.0" prefWidth="520.0" visible="false">
+         <children>
+            <Slider fx:id="sound_slider" layoutX="155.0" layoutY="15.0" prefHeight="75.0" prefWidth="346.0" />
+            <Label layoutX="19.0" layoutY="29.0" text="Volume" textFill="WHITE">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Button fx:id="settings_btn" layoutX="1781.0" layoutY="46.0" mnemonicParsing="false" onAction="#settingsClicked" prefHeight="100.0" prefWidth="110.0" style="-fx-background-radius: 50; -fx-border-radius: 50;" text="SETTINGS" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

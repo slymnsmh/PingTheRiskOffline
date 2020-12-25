@@ -12,6 +12,7 @@ public class Hack {
     Country targetCountry;
     boolean isFirst;
     int numOfAttacker;
+    Attack attack;
 
     public Hack(Country baseCountry, Country targetCountry, int numOfAttacker, boolean isFirst) {
         this.baseCountry = baseCountry;
@@ -31,7 +32,7 @@ public class Hack {
     }
 
     void startAttack() {
-        Attack attack = new Attack(baseCountry.getOwner(), targetCountry.getOwner(), baseCountry, targetCountry,
+        attack = new Attack(baseCountry.getOwner(), targetCountry.getOwner(), baseCountry, targetCountry,
                 numOfAttacker);
         if (targetCountry.getHackerNumber() == 0) {
             targetCountry.getOwner().getCountries().remove(targetCountry);
