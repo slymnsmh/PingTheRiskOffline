@@ -631,11 +631,14 @@ public class GameManager implements Initializable {
     @FXML
     public void cardSelected(MouseEvent e) {
         ImageView clicked = (ImageView) e.getSource();
+        put = false;
         if (chosenCard1.getImage() == null) {
             chosenCard1.setImage(clicked.getImage());
             put = true;
         } else if (chosenCard2.getImage() == null && !put) {
-            chosenCard2.setImage(clicked.getImage());
+            if((chosenCard1.getImage().impl_getUrl().equals("/Pictures/lCard.jpg") && !chosenCard2.getImage().impl_getUrl().equals("/Pictures/lCard.jpg")) ||
+                    (chosenCard1.getImage().impl_getUrl().equals("/Pictures/lCard.jpg") && !chosenCard2.getImage().impl_getUrl().equals("/Pictures/lCard.jpg")) ||)
+                chosenCard2.setImage(clicked.getImage());
             put = true;
         } else if (chosenCard3.getImage() == null && !put) {
             chosenCard3.setImage(clicked.getImage());
@@ -650,26 +653,21 @@ public class GameManager implements Initializable {
         Image gCard = new Image("/Pictures/gCard.jpg");
         Image bCard = new Image("/Pictures/bCard.jpg");
         System.out.println("BEFORE: " + players.get(turnOwner - 1).getNumOfBonusHackers());
-        if (chosenCard1.getImage() == lCard && chosenCard2.getImage() == lCard && chosenCard3.getImage() == lCard)
-            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 3);
-        else if (chosenCard1.getImage() == gCard && chosenCard2.getImage() == gCard && chosenCard3.getImage() == gCard)
-            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 5);
+        System.out.println(chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()));
+        if ((chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())) ||
+                (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(lCard.impl_getUrl())))
+            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 4);
+        else if ((chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(bCard.impl_getUrl())) ||
+                (chosenCard1.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(wCard.impl_getUrl())))
+            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 6);
+        else if ((chosenCard1.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())) ||
+                (chosenCard1.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(gCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())))
+            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 8);
+        else if ((chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())) ||
+                (chosenCard1.getImage().impl_getUrl().equals(lCard.impl_getUrl()) && chosenCard2.getImage().impl_getUrl().equals(wCard.impl_getUrl()) && chosenCard3.getImage().impl_getUrl().equals(gCard.impl_getUrl())))
+            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 10);
         else if (chosenCard1.getImage() == bCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == bCard)
-            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 7);
-        else if ((chosenCard1.getImage() == lCard && chosenCard2.getImage() == gCard && chosenCard3.getImage() == bCard) ||
-                (chosenCard1.getImage() == lCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == gCard) ||
-                (chosenCard1.getImage() == lCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == gCard) ||
-                (chosenCard1.getImage() == bCard && chosenCard2.getImage() == lCard && chosenCard3.getImage() == gCard) ||
-                (chosenCard1.getImage() == bCard && chosenCard2.getImage() == gCard && chosenCard3.getImage() == lCard) ||
-                (chosenCard1.getImage() == gCard && chosenCard2.getImage() == lCard && chosenCard3.getImage() == bCard) ||
-                (chosenCard1.getImage() == gCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == lCard))
-            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 9);
-        else if ((chosenCard1.getImage() == lCard && chosenCard2.getImage() == lCard && chosenCard3.getImage() == bCard) ||
-                (chosenCard1.getImage() == gCard && chosenCard2.getImage() == gCard && chosenCard3.getImage() == bCard) ||
-                (chosenCard1.getImage() == wCard && chosenCard2.getImage() == wCard && chosenCard3.getImage() == bCard))
-            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 11);
-        else if (chosenCard1.getImage() == bCard && chosenCard2.getImage() == bCard && chosenCard3.getImage() == bCard)
-            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 13);
+            players.get(turnOwner - 1).setNumOfBonusHackers(players.get(turnOwner - 1).getNumOfBonusHackers() + 12);
         System.out.println("LATER: " + players.get(turnOwner - 1).getNumOfBonusHackers());
     }
 }
